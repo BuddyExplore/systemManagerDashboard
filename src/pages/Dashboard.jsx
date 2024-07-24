@@ -1,42 +1,20 @@
-import React, { useEffect } from "react";
+import { useEffect, useState } from "react";
 import DashboardBox from "./components/dashboardBox";
-import {
-  AreaChart,
-  Area,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  PieChart,
-  Pie,
-  Cell,
-} from "recharts";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import CardTravelIcon from "@mui/icons-material/CardTravel";
-import GroupIcon from "@mui/icons-material/Group";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
-import PaymentsIcon from "@mui/icons-material/Payments";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import DirectionsBusFilledIcon from "@mui/icons-material/DirectionsBusFilled";
 import AirportShuttleSharpIcon from "@mui/icons-material/AirportShuttleSharp";
 import { MdElectricRickshaw } from "react-icons/md";
-
-/* graph data */
-const data = [
-  { name: "Page A", uv: 4000, pv: 2400, amt: 2400 },
-  { name: "Page B", uv: 3000, pv: 1398, amt: 2210 },
-  { name: "Page C", uv: 2000, pv: 9800, amt: 2290 },
-  { name: "Page D", uv: 2780, pv: 3908, amt: 2000 },
-  { name: "Page E", uv: 1890, pv: 4800, amt: 2181 },
-  { name: "Page F", uv: 2390, pv: 3800, amt: 2500 },
-  { name: "Page G", uv: 3490, pv: 4300, amt: 2100 },
-];
+import ReactApexChart from "react-apexcharts";
+import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
+import LuggageOutlinedIcon from "@mui/icons-material/LuggageOutlined";
+import PaymentsOutlinedIcon from "@mui/icons-material/PaymentsOutlined";
 
 /* table data */
 function createTripData(id, destination, departureDate, arrivalDate, status) {
@@ -52,6 +30,74 @@ const rows = [
 ];
 
 const Dashboard = () => {
+  /*line chart data*/
+  const [state, setState] = useState({
+    series: [
+      {
+        name: "Previous Month",
+        data: [31, 40, 28, 51, 42, 109, 100],
+      },
+      {
+        name: "Last 12 days",
+        data: [11, 32, 45, 32, 34, 52, 41],
+      },
+    ],
+    options: {
+      chart: {
+        height: 350,
+        type: "area",
+      },
+      colors: ["#0078A1", "#4B6D4F"],
+      dataLabels: {
+        enabled: false,
+      },
+      stroke: {
+        curve: "smooth",
+      },
+      xaxis: {
+        type: "datetime",
+        categories: [
+          "2018-09",
+          "2018-10",
+          "2018-11",
+          "2018-12",
+          "2019-01",
+          "2019-02",
+          "2019-03",
+        ],
+      },
+      tooltip: {
+        x: {
+          format: "MM",
+        },
+      },
+    },
+  });
+
+  /*pie chart data*/
+  /* Pie chart data */
+  const [pieChartState, setPieChartState] = useState({
+    series: [44, 55, 41, 17, 15],
+    options: {
+      chart: {
+        type: "donut",
+      },
+      responsive: [
+        {
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 200,
+            },
+            legend: {
+              position: "bottom",
+            },
+          },
+        },
+      ],
+    },
+  });
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -61,32 +107,32 @@ const Dashboard = () => {
       <div className="section py-3 px-3 w-[full]">
         <div className="dashboardWrapper flex justify-between">
           <DashboardBox
-            icon={<PaymentsIcon />}
+            icon={<PaymentsOutlinedIcon />}
             title="Total Expenses"
-            amount="$500"
-            iconColor="rgb(205,92,92)"
-            borderColor="rgba(205,92,92,0.5)"
+            amount="Rs.2000"
+            change="0.43%"
+            isPositive={true}
           />
           <DashboardBox
             icon={<AttachMoneyIcon />}
             title="30 Days Revenue"
-            amount="$3000"
-            iconColor="rgba(98,121,204)"
-            borderColor="rgba(98,121,204,0.5)"
+            amount="Rs.30,000"
+            change="4.35%"
+            isPositive={true}
           />
           <DashboardBox
-            icon={<CardTravelIcon />}
+            icon={<LuggageOutlinedIcon />}
             title="Total Trips"
             amount="200"
-            iconColor="rgb(103,146,103)"
-            borderColor="rgb(103,146,103,0.5)"
+            change="2.59%"
+            isPositive={true}
           />
           <DashboardBox
-            icon={<GroupIcon />}
-            title="Total Tourists"
+            icon={<PersonOutlineIcon />}
+            title="Total Users"
             amount="450"
-            iconColor="rgb(126,110,172)"
-            borderColor="rgb(126,110,172,0.5)"
+            change="0.95%"
+            isPositive={false}
           />
         </div>
       </div>
@@ -104,31 +150,24 @@ const Dashboard = () => {
             position: "relative",
           }}
         >
-          <h2 className="mb-4 font-bold text-sm">Sales Report</h2>
-          <ResponsiveContainer width="100%" height={200}>
-            <AreaChart
-              data={data}
-              syncId="anyId"
-              margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
-            >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              <Area
-                type="monotone"
-                dataKey="uv"
-                stroke="#0078A1"
-                fill="rgb(0, 120, 161,0.5)"
+          <h2 className="mb-4 font-bold text-sm">Revenue</h2>
+          <div>
+            <div id="chart">
+              <ReactApexChart
+                options={state.options}
+                series={state.series}
+                type="area"
+                height={350}
               />
-            </AreaChart>
-          </ResponsiveContainer>
+            </div>
+            <div id="html-dist"></div>
+          </div>
         </div>
 
         <div
           className="card mt-10 border-0"
           style={{
-            width: "30%", // Adjusted width to fit two items in a row
+            width: "30%",
             border: "2px solid white",
             backgroundColor: "white",
             padding: "10px",
@@ -215,17 +254,25 @@ const Dashboard = () => {
         </div>
       </div>
 
-      <div style={{ display: "flex", justifyContent: "space-between", marginTop:"50px" }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          marginTop: "50px",
+        }}
+      >
         <div
           className="card mt-10 border-1 bg-white"
           style={{
             borderRadius: "10px",
             padding: "15px",
             boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-            width: "65%",
+            width: "30%",
           }}
         >
-          <h2 className="mb-4 font-bold text-sm pt-4 px-4">Pending Trips</h2>
+          <h2 className="mb-4 font-bold text-sm pt-4 px-4">
+            Recently Added Locations
+          </h2>
 
           <div className="table-responsive py-3 px-5 ">
             <TableContainer>
@@ -260,13 +307,37 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div
-          className="card mt-10 border-0"
+        {/*<div
+          className="card mt-10 border-1 bg-white"
           style={{
-            width: "30%", // Adjusted width to fit two items in a row
+            borderRadius: "10px",
+            padding: "15px",
+            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+            width: "25%",
+          }}
+        >
+          <h2 className="mb-4 font-bold text-sm pt-4 px-4">
+            Pie Chart Example
+          </h2>
+          <div style={{ width: "100%", height: 300 }}>
+            <div id="chart">
+              <ReactApexChart
+                options={pieChartState.options}
+                series={pieChartState.series}
+                type="donut"
+              />
+            </div>
+            <div id="html-dist"></div>
+          </div>
+        </div>*/}
+
+        <div
+          className="card mt-10 border-1 bg-white"
+          style={{
+            width: "25%", 
             border: "2px solid white",
             backgroundColor: "white",
-            padding: "10px",
+            padding: "15px",
             borderRadius: "10px",
             boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
             position: "relative",

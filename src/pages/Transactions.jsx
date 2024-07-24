@@ -1,30 +1,19 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  LineChart,
-  Line,
-  Legend,
-} from "recharts";
 import { LocalizationProvider, DateCalendar } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
-
-import { PieChart, Pie } from "recharts";
-import { styled } from "@mui/material/styles";
 import { Grid } from "@mui/material";
 import TransactionCard from "./components/transactionCard";
+import ReactApexChart from "react-apexcharts";
+import {
+  ScheduleComponent, ViewsDirective, ViewDirective, Day, Week, WorkWeek, Month, Agenda, Inject
+} from '@syncfusion/ej2-react-schedule';
 
 /*transactionCard data*/
 const data3 = [
@@ -40,80 +29,6 @@ const data3 = [
   { name: "Jan 10", value: 32 },
 ];
 
-/* Line chart data */
-const data1 = [
-  {
-    name: "Page A",
-    uv: 4000,
-    pv: 2400,
-    amt: 2400,
-  },
-  {
-    name: "Page B",
-    uv: 3000,
-    pv: 1398,
-    amt: 2210,
-  },
-  {
-    name: "Page C",
-    uv: 2000,
-    pv: 9800,
-    amt: 2290,
-  },
-  {
-    name: "Page D",
-    uv: 2780,
-    pv: 3908,
-    amt: 2000,
-  },
-  {
-    name: "Page E",
-    uv: 1890,
-    pv: 4800,
-    amt: 2181,
-  },
-  {
-    name: "Page F",
-    uv: 2390,
-    pv: 3800,
-    amt: 2500,
-  },
-  {
-    name: "Page G",
-    uv: 3490,
-    pv: 4300,
-    amt: 2100,
-  },
-];
-
-/* Pie chart data */
-const data2 = [
-  { name: "A", value: 5 },
-  { name: "B", value: 10 },
-  { name: "C", value: 15 },
-  { name: "D", value: 20 },
-];
-
-const size = {
-  width: 400,
-  height: 200,
-};
-
-const StyledText = styled("text")(({ theme }) => ({
-  fill: theme.palette.text.primary,
-  textAnchor: "middle",
-  dominantBaseline: "central",
-  fontSize: 20,
-}));
-
-function PieCenterLabel({ children }) {
-  return (
-    <StyledText x="50%" y="50%">
-      {children}
-    </StyledText>
-  );
-}
-
 /* Table data */
 function createData(name, date, amount, status, mode) {
   return { name, date, amount, status, mode };
@@ -128,6 +43,127 @@ const rows = [
 ];
 
 const Transactions = () => {
+  /* Pie chart data */
+  const [pieChartState, setPieChartState] = useState({
+    series: [44, 55, 41, 17, 15],
+    options: {
+      chart: {
+        type: "donut",
+      },
+      responsive: [
+        {
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 200,
+            },
+            legend: {
+              position: "bottom",
+            },
+          },
+        },
+      ],
+    },
+  });
+
+  /* Column chart data */
+  const [columnChartState, setColumnChartState] = useState({
+    series: [
+      {
+        name: 'Net Profit',
+        data: [44, 55, 57, 56, 61, 58, 63, 60, 66],
+      },
+      {
+        name: 'Revenue',
+        data: [76, 85, 101, 98, 87, 105, 91, 114, 94],
+      },
+      {
+        name: 'Free Cash Flow',
+        data: [35, 41, 36, 26, 45, 48, 52, 53, 41],
+      },
+    ],
+    options: {
+      chart: {
+        type: 'bar',
+        height: 350,
+      },
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          columnWidth: '55%',
+          endingShape: 'rounded',
+        },
+      },
+      dataLabels: {
+        enabled: false,
+      },
+      stroke: {
+        show: true,
+        width: 2,
+        colors: ['transparent'],
+      },
+      xaxis: {
+        categories: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+      },
+      yaxis: {
+        title: {
+          text: '$ (thousands)',
+        },
+      },
+      fill: {
+        opacity: 1,
+      },
+      tooltip: {
+        y: {
+          formatter: (val) => `$ ${val} thousands`,
+        },
+      },
+    },
+  });
+
+  /* Line chart data */
+  const [lineChartState, setLineChartState] = useState({
+    series: [
+      {
+        name: "STOCK ABC",
+        data: [8107.85, 8128.0, 8122.9, 8165.5, 8340.7, 8423.7, 8423.5, 8514.3, 8481.85, 8487.7, 8506.9, 8626.2, 8668.95, 8602.3, 8607.55, 8512.9, 8496.25, 8600.65, 8881.1, 9340.85],
+      },
+    ],
+    options: {
+      chart: {
+        type: 'area',
+        height: 350,
+        zoom: {
+          enabled: false,
+        },
+      },
+      dataLabels: {
+        enabled: false,
+      },
+      stroke: {
+        curve: 'straight',
+      },
+      title: {
+        text: 'Fundamental Analysis of Stocks',
+        align: 'left',
+      },
+      subtitle: {
+        text: 'Price Movements',
+        align: 'left',
+      },
+      labels: ['2021-09-06T00:00:00.000Z', '2021-09-07T00:00:00.000Z', '2021-09-08T00:00:00.000Z', '2021-09-09T00:00:00.000Z', '2021-09-10T00:00:00.000Z', '2021-09-11T00:00:00.000Z', '2021-09-12T00:00:00.000Z', '2021-09-13T00:00:00.000Z', '2021-09-14T00:00:00.000Z', '2021-09-15T00:00:00.000Z', '2021-09-16T00:00:00.000Z', '2021-09-17T00:00:00.000Z', '2021-09-18T00:00:00.000Z', '2021-09-19T00:00:00.000Z', '2021-09-20T00:00:00.000Z', '2021-09-21T00:00:00.000Z', '2021-09-22T00:00:00.000Z', '2021-09-23T00:00:00.000Z', '2021-09-24T00:00:00.000Z', '2021-09-25T00:00:00.000Z'],
+      xaxis: {
+        type: 'datetime',
+      },
+      yaxis: {
+        opposite: true,
+      },
+      legend: {
+        horizontalAlign: 'left',
+      },
+    },
+  });
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -274,21 +310,14 @@ const Transactions = () => {
             Pie Chart Example
           </h2>
           <div style={{ width: "100%", height: 300 }}>
-            <ResponsiveContainer>
-              <PieChart>
-                <Pie
-                  data={data2}
-                  dataKey="value"
-                  nameKey="name"
-                  cx="50%"
-                  cy="50%"
-                  outerRadius={80}
-                  fill="#8884d8"
-                />
-                <Tooltip />
-                <PieCenterLabel>Center label</PieCenterLabel>
-              </PieChart>
-            </ResponsiveContainer>
+            <div id="chart">
+              <ReactApexChart
+                options={pieChartState.options}
+                series={pieChartState.series}
+                type="donut"
+              />
+            </div>
+            <div id="html-dist"></div>
           </div>
         </div>
 
@@ -304,23 +333,15 @@ const Transactions = () => {
           <h2 className="mb-1 font-bold text-sm pt-4 px-4">
             Transaction Overview
           </h2>
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart
-              data={data}
-              margin={{
-                top: 20,
-                right: 30,
-                left: 20,
-                bottom: 5,
-              }}
-            >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              <Bar dataKey="value" fill="#8884d8" />
-            </BarChart>
-          </ResponsiveContainer>
+          <div id="chart">
+            <ReactApexChart
+              options={columnChartState.options}
+              series={columnChartState.series}
+              type="bar"
+              height={350}
+            />
+          </div>
+          <div id="html-dist"></div>
         </div>
       </div>
 
@@ -335,22 +356,15 @@ const Transactions = () => {
       >
         <h2 className="mb-4 font-bold text-sm pt-4 px-4">Line Chart Example</h2>
         <div style={{ width: "100%", height: 300 }}>
-          <ResponsiveContainer>
-            <LineChart data={data1}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" padding={{ left: 30, right: 30 }} />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Line
-                type="monotone"
-                dataKey="pv"
-                stroke="#8884d8"
-                activeDot={{ r: 8 }}
-              />
-              <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
-            </LineChart>
-          </ResponsiveContainer>
+          <div id="chart">
+            <ReactApexChart
+              options={lineChartState.options}
+              series={lineChartState.series}
+              type="area"
+              height={350}
+            />
+          </div>
+          <div id="html-dist"></div>
         </div>
       </div>
     </>

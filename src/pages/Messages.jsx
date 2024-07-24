@@ -18,16 +18,16 @@ import { styled } from "@mui/system";
 import Box from "@mui/material/Box";
 
 /* Table data */
-function createMessageData(id, sender, recipient, subject, content, status, dateSent) {
-  return { id, sender, recipient, subject, content, status, dateSent };
+function createMessageData(id, sender, subject, content, status) {
+  return { id, sender, subject, content, status };
 }
 
 const rows = [
-  createMessageData(1, "John Doe", "Inquiry about tour", "I have some questions about the upcoming tour.", "Unread", "2024-07-20"),
-  createMessageData(2, "Jane Smith", "Booking confirmation", "I would like to confirm my booking.", "Read", "2024-07-18"),
-  createMessageData(3, "Alice Johnson", "Technical issue", "I am facing an issue with the website.", "Unread", "2024-07-15"),
-  createMessageData(4, "Bob Brown",  "Feedback", "Great service!", "Read", "2024-07-10"),
-  createMessageData(5, "Charlie Davis", "Payment issue", "I have a problem with my payment.", "Unread", "2024-07-08"),
+  createMessageData(1, "John Doe", "Inquiry about tour", "I have some questions about the upcoming tour.", "Unread"),
+  createMessageData(2, "Jane Smith", "Booking confirmation", "I would like to confirm my booking.", "Read"),
+  createMessageData(3, "Alice Johnson", "Technical issue", "I am facing an issue with the website.", "Unread"),
+  createMessageData(4, "Bob Brown",  "Feedback", "Great service!", "Read"),
+  createMessageData(5, "Charlie Davis", "Payment issue", "I have a problem with my payment.", "Unread"),
 ];
 
 const CustomIconButton = styled(IconButton)({
@@ -128,7 +128,6 @@ const Messages = () => {
                   <TableCell>Subject</TableCell>
                   <TableCell>Content</TableCell>
                   <TableCell>Status</TableCell>
-                  <TableCell>Date Sent</TableCell>
                   <TableCell>Action</TableCell>
                 </TableRow>
               </TableHead>
@@ -149,7 +148,6 @@ const Messages = () => {
                       <TableCell style={{ color: getStatusColor(row.status) }}>
                         {row.status}
                       </TableCell>
-                      <TableCell>{row.dateSent}</TableCell>
                       <TableCell>
                         <CustomIconButton
                           aria-controls="simple-menu"

@@ -350,15 +350,15 @@ const Trips = () => {
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
               <TableHead>
                 <TableRow>
-                  <TableCell>Trip ID</TableCell>
-                  <TableCell>Vehicle</TableCell>
-                  <TableCell>User</TableCell>
-                  <TableCell>Number of people</TableCell>
-                  <TableCell>Number of days</TableCell>
-                  <TableCell>From</TableCell>
-                  <TableCell>To</TableCell>
-                  <TableCell>Status</TableCell>
-                  <TableCell>Action</TableCell>
+                  <TableCell sx={{ fontWeight: 'bold'}}>Trip ID</TableCell>
+                  <TableCell sx={{ fontWeight: 'bold'}}>Vehicle</TableCell>
+                  <TableCell sx={{ fontWeight: 'bold'}}>User</TableCell>
+                  <TableCell sx={{ fontWeight: 'bold'}}>Number of people</TableCell>
+                  <TableCell sx={{ fontWeight: 'bold'}}>Number of days</TableCell>
+                  <TableCell sx={{ fontWeight: 'bold'}}>From</TableCell>
+                  <TableCell sx={{ fontWeight: 'bold'}}>To</TableCell>
+                  <TableCell sx={{ fontWeight: 'bold'}}>Status</TableCell>
+                  <TableCell sx={{ fontWeight: 'bold'}}>Action</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -379,7 +379,7 @@ const Trips = () => {
                             style={styles.userImage}
                           />
                           <div>
-                            <div style={styles.userName}>
+                            <div>
                               {row.firstName} {row.lastName}
                             </div>
                             <div style={styles.userEmail}>{row.email}</div>
@@ -467,9 +467,6 @@ const styles = {
     height: 40,
     borderRadius: "50%",
     marginRight: 10,
-  },
-  userName: {
-    fontWeight: "bold",
   },
   userEmail: {
     fontSize: 12,
