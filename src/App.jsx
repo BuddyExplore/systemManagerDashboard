@@ -8,7 +8,6 @@ import Trips from "./pages/Trips";
 import Approvals from "./pages/Approvals";
 import VehicleBreakdowns from "./pages/VehicleBreakdowns";
 import Transactions from "./pages/Transactions";
-import Cards from "./pages/Cards";
 import TravelInfo from "./pages/TravelInfo";
 import Messages from "./pages/Messages";
 import Notifications from "./pages/Notifications";
@@ -39,7 +38,6 @@ function App() {
               <Route path="/approvals" exact={true} element={<Approvals/>} />
               <Route path="/vehicleBreakdowns" exact={true} element={<VehicleBreakdowns/>} />
               <Route path="/transactions" exact={true} element={<Transactions/>} />
-              <Route path="/cards" exact={true} element={<Cards/>} />
               <Route path="/travelInfo" exact={true} element={<TravelInfo/>} />            
               <Route path="/messages" exact={true} element={<Messages/>} />
               <Route path="/notifications" exact={true} element={<Notifications/>} />

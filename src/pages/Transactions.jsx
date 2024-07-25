@@ -11,9 +11,6 @@ import dayjs from "dayjs";
 import { Grid } from "@mui/material";
 import TransactionCard from "./components/transactionCard";
 import ReactApexChart from "react-apexcharts";
-import {
-  ScheduleComponent, ViewsDirective, ViewDirective, Day, Week, WorkWeek, Month, Agenda, Inject
-} from '@syncfusion/ej2-react-schedule';
 
 /*transactionCard data*/
 const data3 = [
@@ -43,6 +40,7 @@ const rows = [
 ];
 
 const Transactions = () => {
+  
   /* Pie chart data */
   const [pieChartState, setPieChartState] = useState({
     series: [44, 55, 41, 17, 15],
@@ -50,6 +48,8 @@ const Transactions = () => {
       chart: {
         type: "donut",
       },
+      labels: ['Car', 'Van', 'Three Wheel', 'Bus', 'Motor Cycle'],
+      colors: ['#0078A1', '#4B6D4F', '#39539E', '#70D6E3', '#D7A93B'],
       responsive: [
         {
           breakpoint: 480,
@@ -65,7 +65,7 @@ const Transactions = () => {
       ],
     },
   });
-
+  
   /* Column chart data */
   const [columnChartState, setColumnChartState] = useState({
     series: [
@@ -107,7 +107,7 @@ const Transactions = () => {
       },
       yaxis: {
         title: {
-          text: '$ (thousands)',
+          text: 'Rs. (thousands)',
         },
       },
       fill: {
@@ -115,9 +115,10 @@ const Transactions = () => {
       },
       tooltip: {
         y: {
-          formatter: (val) => `$ ${val} thousands`,
+          formatter: (val) => `Rs. ${val} thousands`,
         },
       },
+      colors: ['#0078A1', '#4B6D4F', '#39539E'], 
     },
   });
 
@@ -144,11 +145,11 @@ const Transactions = () => {
         curve: 'straight',
       },
       title: {
-        text: 'Fundamental Analysis of Stocks',
+        text: 'Fundamental Analysis of Transactions',
         align: 'left',
       },
       subtitle: {
-        text: 'Price Movements',
+        //text: 'Price Movements',
         align: 'left',
       },
       labels: ['2021-09-06T00:00:00.000Z', '2021-09-07T00:00:00.000Z', '2021-09-08T00:00:00.000Z', '2021-09-09T00:00:00.000Z', '2021-09-10T00:00:00.000Z', '2021-09-11T00:00:00.000Z', '2021-09-12T00:00:00.000Z', '2021-09-13T00:00:00.000Z', '2021-09-14T00:00:00.000Z', '2021-09-15T00:00:00.000Z', '2021-09-16T00:00:00.000Z', '2021-09-17T00:00:00.000Z', '2021-09-18T00:00:00.000Z', '2021-09-19T00:00:00.000Z', '2021-09-20T00:00:00.000Z', '2021-09-21T00:00:00.000Z', '2021-09-22T00:00:00.000Z', '2021-09-23T00:00:00.000Z', '2021-09-24T00:00:00.000Z', '2021-09-25T00:00:00.000Z'],
@@ -161,17 +162,15 @@ const Transactions = () => {
       legend: {
         horizontalAlign: 'left',
       },
+      colors: ['#39539E'], 
     },
   });
+
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  const data = [
-    { name: "Pending", value: 3 },
-    { name: "Completed", value: 2 },
-  ];
 
   return (
     <>
@@ -181,37 +180,37 @@ const Transactions = () => {
           <Grid item xs={12} sm={6} md={3}>
             <TransactionCard
               title="Revenue Status"
-              value="$432"
+              value="Rs. 3000"
               chartType="bar"
               data={data3}
-              color="#d0ebff"
+              color="#fff"
             />
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
             <TransactionCard
               title="Page View"
-              value="$432"
+              value="Rs. 5600"
               chartType="line"
               data={data3}
-              color="#fff3bf"
+              color="#fff"
             />
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
             <TransactionCard
               title="Bounce Rate"
-              value="$432"
+              value="Rs. 7600"
               chartType="line"
               data={data3}
-              color="#ffe3e3"
+              color="#fff"
             />
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
             <TransactionCard
               title="Revenue Status"
-              value="$432"
+              value="Rs. 5470"
               chartType="bar"
               data={data3}
-              color="#f3d4ff"
+              color="#fff"
             />
           </Grid>
         </Grid>
@@ -307,7 +306,7 @@ const Transactions = () => {
           }}
         >
           <h2 className="mb-4 font-bold text-sm pt-4 px-4">
-            Pie Chart Example
+            Transport Transactions
           </h2>
           <div style={{ width: "100%", height: 300 }}>
             <div id="chart">
@@ -352,21 +351,23 @@ const Transactions = () => {
           padding: "15px",
           boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
           width: "100%",
+          marginBottom:"50px"
         }}
       >
-        <h2 className="mb-4 font-bold text-sm pt-4 px-4">Line Chart Example</h2>
-        <div style={{ width: "100%", height: 300 }}>
+        {/*<h2 className="mb-4 font-bold text-sm pt-4 px-4">Line Chart Example</h2>*/}
+        <div style={{ width: "100%", height: 350, }}>
           <div id="chart">
             <ReactApexChart
               options={lineChartState.options}
               series={lineChartState.series}
               type="area"
-              height={350}
+              height={300}
             />
           </div>
           <div id="html-dist"></div>
         </div>
       </div>
+
     </>
   );
 };

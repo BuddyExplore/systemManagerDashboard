@@ -1,20 +1,11 @@
 import { useEffect, useState } from "react";
 import DashboardBox from "./components/dashboardBox";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
-import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
-import DirectionsBusFilledIcon from "@mui/icons-material/DirectionsBusFilled";
-import AirportShuttleSharpIcon from "@mui/icons-material/AirportShuttleSharp";
-import { MdElectricRickshaw } from "react-icons/md";
 import ReactApexChart from "react-apexcharts";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import LuggageOutlinedIcon from "@mui/icons-material/LuggageOutlined";
 import PaymentsOutlinedIcon from "@mui/icons-material/PaymentsOutlined";
+import Map from "../assets/images/map.jpg";
 
 /* table data */
 function createTripData(id, destination, departureDate, arrivalDate, status) {
@@ -74,23 +65,54 @@ const Dashboard = () => {
     },
   });
 
-  /*pie chart data*/
-  /* Pie chart data */
-  const [pieChartState, setPieChartState] = useState({
-    series: [44, 55, 41, 17, 15],
+  /*radialbar chart data*/
+  const [radialBar, setRadialBar] = useState({
+    series: [76, 67, 61],
     options: {
       chart: {
-        type: "donut",
+        height: 250,
+        type: "radialBar",
       },
+      plotOptions: {
+        radialBar: {
+          offsetY: 0,
+          startAngle: 0,
+          endAngle: 270,
+          hollow: {
+            margin: 5,
+            size: "30%",
+            background: "transparent",
+            image: undefined,
+          },
+          dataLabels: {
+            name: {
+              show: false,
+            },
+            value: {
+              show: false,
+            },
+          },
+          barLabels: {
+            enabled: true,
+            useSeriesColors: true,
+            offsetX: -8,
+            fontSize: "16px",
+            formatter: function (seriesName, opts) {
+              return (
+                seriesName + ":  " + opts.w.globals.series[opts.seriesIndex]
+              );
+            },
+          },
+        },
+      },
+      colors: ['#0078A1', '#4B6D4F', '#39539E'], 
+      labels: ["landmarks", "bookings", "blogs"],
       responsive: [
         {
           breakpoint: 480,
           options: {
-            chart: {
-              width: 200,
-            },
             legend: {
-              position: "bottom",
+              show: false,
             },
           },
         },
@@ -98,6 +120,170 @@ const Dashboard = () => {
     },
   });
 
+    /*bar data*/
+  const [bar, setBar] = useState({
+    series: [
+      {
+        name: "Hotel",
+        data: [76, 85, 101, 98, 87, 105, 91, 114, 94],
+      },
+      {
+        name: "Vehicle",
+        data: [35, 41, 36, 26, 45, 48, 52, 53, 41],
+      },
+      {
+        name: "Tour Guide",
+        data: [35, 41, 36, 26, 45, 48, 52, 53, 41],
+      },
+      {
+        name: "Shops",
+        data: [35, 41, 36, 26, 45, 48, 52, 53, 41],
+      },
+      {
+        name: "Activities",
+        data: [35, 41, 36, 26, 45, 48, 52, 53, 41],
+      },
+    ],
+    options: {
+      chart: {
+        type: "bar",
+        height: 300,
+      },
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          columnWidth: "35%",
+          endingShape: "rounded",
+        },
+      },
+      dataLabels: {
+        enabled: false,
+      },
+      stroke: {
+        show: true,
+        width: 1,
+        colors: ["transparent"],
+      },
+      xaxis: {
+        categories: [
+          "Feb",
+          "Mar",
+          "Apr",
+          "May",
+          "Jun",
+          "Jul",
+          "Aug",
+          "Sep",
+          "Oct",
+        ],
+      },
+      yaxis: {
+        title: {
+          text: "Rs. (thousands)",
+        },
+      },
+      fill: {
+        opacity: 1,
+      },
+      tooltip: {
+        y: {
+          formatter: function (val) {
+            return "Rs. " + val + " thousands";
+          },
+        },
+      },
+      colors: ['#0078A1', '#4B6D4F', '#70D6E3', '#39539E', '#D7A93B'], 
+    },
+  });
+
+  /*column chart*/
+  const [column, setColumn] = useState({
+    series: [
+      {
+        data: [53, 32, 33, 52, 13, 44, 32],
+      },
+    ],
+    options: {
+      chart: {
+        type: "bar",
+        height: 300,
+      },
+      plotOptions: {
+        bar: {
+          horizontal: true,
+          dataLabels: {
+            position: "top",
+          },
+        },
+      },
+      dataLabels: {
+        enabled: true,
+        offsetX: -6,
+        style: {
+          fontSize: "12px",
+          colors: ["#fff"],
+        },
+      },
+      stroke: {
+        show: true,
+        width: 1,
+        colors: ["#fff"],
+      },
+      tooltip: {
+        shared: true,
+        intersect: false,
+      },
+      xaxis: {
+        categories: [
+          "Tourist",
+          "Tour Guide",
+          "Vehicle Owner",
+          "Shop Manager",
+          "Hotel Manager",
+          "Activity Manager",
+        ],
+      },
+      colors: ['#39539E'], 
+    },
+  });
+
+   /*area chart*/
+   const [area, setArea] = useState({
+    series: [{
+      name: 'car',
+      data: [31, 40, 28, 51, 42, 109, 100]
+    }, {
+      name: 'van',
+      data: [11, 32, 45, 32, 34, 52, 41]
+    }, {
+      name: 'threeWheel',
+      data: [9, 23, 41, 23, 10, 8, 10]
+    }],
+    options: {
+      chart: {
+        height: 350,
+        type: 'area'
+      },
+      dataLabels: {
+        enabled: false
+      },
+      stroke: {
+        curve: 'smooth'
+      },
+      xaxis: {
+        type: 'date',
+        categories: ["Dec", "Jan", "Feb", "March", "April", "May", "June"]
+      },
+      tooltip: {
+        x: {
+          format: 'MM'
+        },
+      },
+      colors: ['#0078A1', '#4B6D4F', '#39539E'], 
+    },
+  });
+
+  
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -141,7 +327,7 @@ const Dashboard = () => {
         <div
           className="card mt-10 border-0"
           style={{
-            width: "65%",
+            width: "55%",
             border: "2px solid white",
             backgroundColor: "white",
             padding: "15px",
@@ -165,9 +351,89 @@ const Dashboard = () => {
         </div>
 
         <div
-          className="card mt-10 border-0"
+          className="card mt-10 border-1 bg-white"
           style={{
-            width: "30%",
+            borderRadius: "10px",
+            padding: "15px",
+            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+            width: "40%",
+          }}
+        >
+          <h2 className="mb-4 font-bold text-sm pt-4 px-4">
+            Booking Revenues - Last Month
+          </h2>
+          <div style={{ width: "100%", height: 300 }}>
+            <div id="chart">
+              <ReactApexChart
+                options={bar.options}
+                series={bar.series}
+                type="bar"
+                height={350}
+              />
+            </div>
+            <div id="html-dist"></div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        className="card mt-10 border-1 bg-white"
+        style={{
+          borderRadius: "10px",
+          padding: "15px",
+          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+          width: "100%",
+        }}
+      >
+        <h2 className="mb-4 font-bold text-sm pt-4 px-4">
+          Recently Added Locations
+        </h2>
+
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <div
+            style={{
+              width: "40%",
+              border: "2px solid white",
+              backgroundColor: "white",
+              padding: "10px",
+              borderRadius: "10px",
+              boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+              position: "relative",
+            }}
+          >
+            <h4 className="mb-4 font-bold text-sm pt-4 px-4">1) Galewela</h4>
+            <h6>
+              Galewela is a rural area town and it is located in Matale
+              district. This place has lot of historical places to watch.
+            </h6>
+            <hr style={{ marginTop: "30px", marginBottom: "30px" }} />
+            <h4 className="mb-4 font-bold text-sm pt-4 px-4">2) Galewela</h4>
+            <h6>
+              Galewela is a rural area town and it is located in Matale
+              district. This place has lot of historical places to watch.
+            </h6>
+          </div>
+          <div className="logoWrapper flex justify-center items-center py-3 px-3">
+            <img src={Map} className="w-700 h-400 object-contain" />
+          </div>
+          <div></div>
+        </div>
+      </div>
+
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          width: "100%",
+          marginTop:"50px",
+          marginBottom: "50px",
+        }}
+      >
+        <div
+          className="card mt-10 border-1 bg-white"
+          style={{
+            flex: 1,
+            margin: "0 10px",
             border: "2px solid white",
             backgroundColor: "white",
             padding: "10px",
@@ -176,249 +442,73 @@ const Dashboard = () => {
             position: "relative",
           }}
         >
-          <h2 className="mb-4 font-bold text-sm">User Accounts</h2>
-          <div
-            style={{
-              justifyContent: "center",
-              alignContent: "center",
-              marginBottom: "40px",
-            }}
-          >
-            <p style={{ borderBottom: "1px solid #ddd", marginBottom: "5px" }}>
-              Tourists : 20
-            </p>
-            <p style={{ borderBottom: "1px solid #ddd", marginBottom: "5px" }}>
-              Tour Guides : 20
-            </p>
-            <p style={{ borderBottom: "1px solid #ddd", marginBottom: "5px" }}>
-              Vehicle Owners : 20
-            </p>
-            <p style={{ borderBottom: "1px solid #ddd", marginBottom: "5px" }}>
-              Hotel Managers : 20
-            </p>
-            <p style={{ borderBottom: "1px solid #ddd", marginBottom: "5px" }}>
-              Activity Providers : 20
-            </p>
-          </div>
-
-          <h2 className="mb-4 font-bold text-sm">Type of Transport</h2>
-          <div
-            style={{
-              display: "flex",
-              gap: 60,
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <MdElectricRickshaw
-              style={{
-                color: "rgb(103,146,103)",
-                borderRadius: "5px",
-                backgroundColor: "rgba(103,146,103,0.2)",
-                width: "10%",
-                height: "8%",
-                padding: "5px",
-              }}
-            />
-            <DirectionsCarIcon
-              style={{
-                color: "rgb(205,92,92)",
-                borderRadius: "5px",
-                backgroundColor: "rgba(205,92,92,0.2)",
-                width: "10%",
-                height: "8%",
-                padding: "5px",
-              }}
-            />
-            <DirectionsBusFilledIcon
-              style={{
-                color: "rgba(98,121,204)",
-                borderRadius: "5px",
-                backgroundColor: "rgba(98,121,204,0.2)",
-                width: "10%",
-                height: "8%",
-                padding: "5px",
-              }}
-            />
-            <AirportShuttleSharpIcon
-              style={{
-                color: "rgb(126,110,172)",
-                borderRadius: "5px",
-                backgroundColor: "rgba(126,110,172,0.2)",
-                width: "10%",
-                height: "8%",
-                padding: "5px",
-              }}
-            />
-          </div>
-        </div>
-      </div>
-
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          marginTop: "50px",
-        }}
-      >
-        <div
-          className="card mt-10 border-1 bg-white"
-          style={{
-            borderRadius: "10px",
-            padding: "15px",
-            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-            width: "30%",
-          }}
-        >
-          <h2 className="mb-4 font-bold text-sm pt-4 px-4">
-            Recently Added Locations
-          </h2>
-
-          <div className="table-responsive py-3 px-5 ">
-            <TableContainer>
-              <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Trip ID</TableCell>
-                    <TableCell align="right">Destination</TableCell>
-                    <TableCell align="right">Departure Date</TableCell>
-                    <TableCell align="right">Arrival Date</TableCell>
-                    <TableCell align="right">Status</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {rows.map((row) => (
-                    <TableRow
-                      key={row.id}
-                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                    >
-                      <TableCell component="th" scope="row">
-                        {row.id}
-                      </TableCell>
-                      <TableCell align="right">{row.destination}</TableCell>
-                      <TableCell align="right">{row.departureDate}</TableCell>
-                      <TableCell align="right">{row.arrivalDate}</TableCell>
-                      <TableCell align="right">{row.status}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </div>
-        </div>
-
-        {/*<div
-          className="card mt-10 border-1 bg-white"
-          style={{
-            borderRadius: "10px",
-            padding: "15px",
-            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-            width: "25%",
-          }}
-        >
-          <h2 className="mb-4 font-bold text-sm pt-4 px-4">
-            Pie Chart Example
-          </h2>
+          <h2 className="mb-4 font-bold text-sm pt-4 ">Reviews</h2>
           <div style={{ width: "100%", height: 300 }}>
             <div id="chart">
               <ReactApexChart
-                options={pieChartState.options}
-                series={pieChartState.series}
-                type="donut"
+                options={radialBar.options}
+                series={radialBar.series}
+                type="radialBar"
+                height={350}
               />
             </div>
             <div id="html-dist"></div>
           </div>
-        </div>*/}
+        </div>
 
         <div
           className="card mt-10 border-1 bg-white"
           style={{
-            width: "25%", 
+            flex: 1,
+            margin: "0 10px",
             border: "2px solid white",
             backgroundColor: "white",
-            padding: "15px",
+            padding: "10px",
             borderRadius: "10px",
             boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
             position: "relative",
           }}
         >
-          <h2 className="mb-4 font-bold text-sm">User Accounts</h2>
-          <div
-            style={{
-              justifyContent: "center",
-              alignContent: "center",
-              marginBottom: "40px",
-            }}
-          >
-            <p style={{ borderBottom: "1px solid #ddd", marginBottom: "5px" }}>
-              Tourists : 20
-            </p>
-            <p style={{ borderBottom: "1px solid #ddd", marginBottom: "5px" }}>
-              Tour Guides : 20
-            </p>
-            <p style={{ borderBottom: "1px solid #ddd", marginBottom: "5px" }}>
-              Vehicle Owners : 20
-            </p>
-            <p style={{ borderBottom: "1px solid #ddd", marginBottom: "5px" }}>
-              Hotel Managers : 20
-            </p>
-            <p style={{ borderBottom: "1px solid #ddd", marginBottom: "5px" }}>
-              Activity Providers : 20
-            </p>
-          </div>
-
-          <h2 className="mb-4 font-bold text-sm">Type of Transport</h2>
-          <div
-            style={{
-              display: "flex",
-              gap: 60,
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <MdElectricRickshaw
-              style={{
-                color: "rgb(103,146,103)",
-                borderRadius: "5px",
-                backgroundColor: "rgba(103,146,103,0.2)",
-                width: "10%",
-                height: "8%",
-                padding: "5px",
-              }}
-            />
-            <DirectionsCarIcon
-              style={{
-                color: "rgb(205,92,92)",
-                borderRadius: "5px",
-                backgroundColor: "rgba(205,92,92,0.2)",
-                width: "10%",
-                height: "8%",
-                padding: "5px",
-              }}
-            />
-            <DirectionsBusFilledIcon
-              style={{
-                color: "rgba(98,121,204)",
-                borderRadius: "5px",
-                backgroundColor: "rgba(98,121,204,0.2)",
-                width: "10%",
-                height: "8%",
-                padding: "5px",
-              }}
-            />
-            <AirportShuttleSharpIcon
-              style={{
-                color: "rgb(126,110,172)",
-                borderRadius: "5px",
-                backgroundColor: "rgba(126,110,172,0.2)",
-                width: "10%",
-                height: "8%",
-                padding: "5px",
-              }}
-            />
+          <h2 className="mb-4 font-bold text-sm pt-4 ">User Count</h2>
+          <div style={{ width: "100%", height: 300 }}>
+            <div id="chart">
+              <ReactApexChart
+                options={column.options}
+                series={column.series}
+                type="bar"
+                height={250}
+              />
+            </div>
+            <div id="html-dist"></div>
           </div>
         </div>
+
+        <div
+        className="card mt-10 border-1 bg-white"
+        style={{
+          flex: 1,
+          margin: "0 10px",
+          border: "2px solid white",
+          backgroundColor: "white",
+          padding: "10px",
+          borderRadius: "10px",
+          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+          position: "relative",
+        }}
+      >
+        <h2 className="mb-4 font-bold text-sm pt-4 ">Most Used Travel Types</h2>
+        <div style={{ width: "100%", height: 300 }}>
+          <div id="chart">
+            <ReactApexChart
+              options={area.options}
+              series={area.series}
+              type="area"
+              height={250}
+            />
+          </div>
+          <div id="html-dist"></div>
+        </div>
+      </div>
       </div>
     </>
   );

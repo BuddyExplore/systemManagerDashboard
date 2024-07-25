@@ -165,7 +165,6 @@ const Messages = () => {
                           <MenuItem onClick={handleClose}>Delete Message</MenuItem>
                           <MenuItem onClick={handleClose}>Mark as Read</MenuItem>
                           <MenuItem onClick={handleClose}>Reply</MenuItem>
-                          <MenuItem onClick={handleClose}>Forward</MenuItem>
                         </Menu>
                       </TableCell>
                     </TableRow>

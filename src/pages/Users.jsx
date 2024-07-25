@@ -138,10 +138,6 @@ const Users = () => {
     setCurrentPage(value);
   };
 
-  const handleOpenModal = () => {
-    setIsModalOpen(true);
-  };
-
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };

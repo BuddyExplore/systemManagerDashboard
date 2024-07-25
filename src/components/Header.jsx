@@ -37,14 +37,18 @@ const Header = () => {
         return "Users";
       case "/trips":
         return "Trips";
-      case "/approvals":
-        return "Approvals";
+      case "/approvals/tourGuide":
+        return "Tour Guide Approval";
+      case "/approvals/vehicleOwner":
+        return "Vehicle Owner Approval";
+      case "/approvals/hotelManager":
+        return "Hotel Manager Approval";
+      case "/approvals/activityProvider":
+        return "Activity Provider Approval";
       case "/vehicleBreakdowns":
         return "VehicleBreakdowns";
       case "/transactions":
         return "Transactions";
-      case "/cards":
-        return "Cooperate Cards";
       case "/travelInfo":
         return "TravelInfo";
       case "/messages":
@@ -71,7 +75,6 @@ const Header = () => {
   };
   return (
     <header className="fixed left-[15%] bg-transparent w-[85%]  shadow-md z-50 flex items-center justify-between ">
-    
       <h2 className="text-black-800 font-bold text-xl">{getPageName(path)}</h2>
 
       <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
