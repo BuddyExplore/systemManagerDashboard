@@ -5,7 +5,6 @@ import Button from "@mui/material/Button";
 import {
   MdOutlineDashboard,
   MdOutlineMessage,
-  MdNotificationsNone,
   MdOutlineSettings,
   MdOutlineTravelExplore,
   MdCardTravel,
@@ -139,29 +138,10 @@ const Sidebar = () => {
             </Button>
           </li>
 
-          {/*messages*/}
-          <li>
-            <Button className={`w-full flex items-center ${activeTab === 7 ? "active" : ""}`} onClick={() => handleButtonClick(7, "/messages")}>
-              <span className="icon w-[30px] h-[30px] flex items-center justify-center rounded-md">
-                <MdOutlineMessage />
-              </span>
-              Messages
-            </Button>
-          </li>
-
-          {/*notfications*/}
-          <li>
-            <Button className={`w-full flex items-center ${activeTab === 8 ? "active" : ""}`} onClick={() => handleButtonClick(8, "/notifications")}>
-              <span className="icon w-[30px] h-[30px] flex items-center justify-center rounded-md">
-                <MdNotificationsNone />
-              </span>
-              Notifications
-            </Button>
-          </li>
 
           {/*complains*/}           
           <li>
-            <Button className={`w-full flex items-center ${activeTab === 9 ? "active" : ""}`} onClick={() => handleButtonClick(9, "/complains")}>
+            <Button className={`w-full flex items-center ${activeTab === 7 ? "active" : ""}`} onClick={() => handleButtonClick(7, "/complains")}>
               <span className="icon w-[30px] h-[30px] flex items-center justify-center rounded-md">
                 <GrDocumentMissing />
               </span>
@@ -170,19 +150,19 @@ const Sidebar = () => {
 
           </li>
 
-          {/*analytics*/}
+          {/*analytics
           <li>
-            <Button className={`w-full flex items-center ${activeTab === 10 ? "active" : ""}`} onClick={() => handleButtonClick(10, "/analytics")}>
+            <Button className={`w-full flex items-center ${activeTab === 8 ? "active" : ""}`} onClick={() => handleButtonClick(8, "/analytics")}>
               <span className="icon w-[30px] h-[30px] flex items-center justify-center rounded-md">
                 <IoAnalyticsOutline />
               </span>
               Analytics
             </Button>
-          </li>
+          </li>*/}
 
           {/*settings*/}
           <li>
-            <Button className={`w-full flex items-center ${activeTab === 11 ? "active" : ""}`} onClick={() => handleButtonClick(11, "/settings")}>
+            <Button className={`w-full flex items-center ${activeTab === 8 ? "active" : ""}`} onClick={() => handleButtonClick(8, "/settings")}>
               <span className="icon w-[30px] h-[30px] flex items-center justify-center rounded-md">
                 <MdOutlineSettings />
               </span>

@@ -16,18 +16,43 @@ import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/system";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 
 /* Table data */
 function createMessageData(id, sender, subject, content, status) {
   return { id, sender, subject, content, status };
 }
 
-const rows = [
-  createMessageData(1, "John Doe", "Inquiry about tour", "I have some questions about the upcoming tour.", "Unread"),
-  createMessageData(2, "Jane Smith", "Booking confirmation", "I would like to confirm my booking.", "Read"),
-  createMessageData(3, "Alice Johnson", "Technical issue", "I am facing an issue with the website.", "Unread"),
-  createMessageData(4, "Bob Brown",  "Feedback", "Great service!", "Read"),
-  createMessageData(5, "Charlie Davis", "Payment issue", "I have a problem with my payment.", "Unread"),
+const initialRows = [
+  createMessageData(
+    1,
+    "John Doe",
+    "Inquiry about tour",
+    "I have some questions about the upcoming tour.",
+    "Unread"
+  ),
+  createMessageData(
+    2,
+    "Jane Smith",
+    "Booking confirmation",
+    "I would like to confirm my booking.",
+    "Read"
+  ),
+  createMessageData(
+    3,
+    "Alice Johnson",
+    "Technical issue",
+    "I am facing an issue with the website.",
+    "Replied"
+  ),
+  createMessageData(4, "Bob Brown", "Feedback", "Great service!", "Read"),
+  createMessageData(
+    5,
+    "Charlie Davis",
+    "Payment issue",
+    "I have a problem with my payment.",
+    "Unread"
+  ),
 ];
 
 const CustomIconButton = styled(IconButton)({
@@ -42,7 +67,8 @@ const Messages = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [filterByStatus, setFilterByStatus] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const rowsPerPage = 10; 
+  const rowsPerPage = 10;
+  const [rows, setRows] = useState(initialRows);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -60,12 +86,26 @@ const Messages = () => {
     setCurrentPage(value);
   };
 
+  const handleReply = (messageId) => {
+    console.log(`Replying to message ${messageId}`);
+  };
+
+  const handleMarkAsRead = (messageId) => {
+    const updatedRows = rows.map((row) =>
+      row.id === messageId ? { ...row, status: "Read" } : row
+    );
+    setRows(updatedRows);
+    setAnchorEl(null);
+  };
+
   const getStatusColor = (status) => {
     switch (status) {
       case "Read":
         return "green";
       case "Unread":
         return "red";
+      case "Replied":
+        return "orange";
       default:
         return "black";
     }
@@ -86,7 +126,12 @@ const Messages = () => {
         <div className="d-flex justify-content-end align-items-center mt-24 mb-1 px-4">
           <FormControl
             variant="outlined"
-            style={{ minWidth: 150, minHeight: 50, marginRight: "20px", borderRadius: "100px"}}
+            style={{
+              minWidth: 150,
+              minHeight: 50,
+              marginRight: "20px",
+              borderRadius: "100px",
+            }}
           >
             <InputLabel>Filter By Status</InputLabel>
             <Select
@@ -104,14 +149,13 @@ const Messages = () => {
               ))}
             </Select>
           </FormControl>
-
         </div>
       </Box>
 
       <div
         className="card border-2 bg-white"
         style={{
-          border:"1px solid #ddd",
+          border: "1px solid #ddd",
           borderRadius: "10px",
           padding: "15px",
           boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
@@ -124,16 +168,20 @@ const Messages = () => {
               <TableHead>
                 <TableRow>
                   <TableCell>Message ID</TableCell>
-                  <TableCell>Sender</TableCell>                
+                  <TableCell>Sender</TableCell>
                   <TableCell>Subject</TableCell>
                   <TableCell>Content</TableCell>
                   <TableCell>Status</TableCell>
+                  <TableCell>Reply</TableCell>
                   <TableCell>Action</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {filteredRows
-                  .slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage)
+                  .slice(
+                    (currentPage - 1) * rowsPerPage,
+                    currentPage * rowsPerPage
+                  )
                   .map((row) => (
                     <TableRow
                       key={row.id}
@@ -149,6 +197,16 @@ const Messages = () => {
                         {row.status}
                       </TableCell>
                       <TableCell>
+                        {(row.status === "Unread" || row.status === "Read") && (
+                          <Button
+                            variant="outlined"
+                            onClick={() => handleReply(row.id)}
+                          >
+                            Reply
+                          </Button>
+                        )}
+                      </TableCell>
+                      <TableCell>
                         <CustomIconButton
                           aria-controls="simple-menu"
                           aria-haspopup="true"
@@ -162,9 +220,15 @@ const Messages = () => {
                           open={Boolean(anchorEl)}
                           onClose={handleClose}
                         >
-                          <MenuItem onClick={handleClose}>Delete Message</MenuItem>
-                          <MenuItem onClick={handleClose}>Mark as Read</MenuItem>
-                          <MenuItem onClick={handleClose}>Reply</MenuItem>
+                          <MenuItem onClick={handleClose}>
+                            Delete Message
+                          </MenuItem>
+
+                          {row.status === "Unread" && (
+                            <MenuItem onClick={() => handleMarkAsRead(row.id)}>
+                              Mark as Read
+                            </MenuItem>
+                          )}
                         </Menu>
                       </TableCell>
                     </TableRow>
@@ -177,16 +241,18 @@ const Messages = () => {
 
       <Box
         sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          textAlign: 'right',
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          textAlign: "right",
           mt: 5,
-          mb:5,
+          mb: 5,
           px: 4,
         }}
       >
-        <span>{displayedRows} of {totalRows} rows</span>
+        <span>
+          {displayedRows} of {totalRows} rows
+        </span>
         <Stack spacing={2}>
           <Pagination
             count={Math.ceil(totalRows / rowsPerPage)}
@@ -196,13 +262,12 @@ const Messages = () => {
             shape="rounded"
           />
         </Stack>
-        <span>Page {currentPage} of {Math.ceil(totalRows / rowsPerPage)}</span>
+        <span>
+          Page {currentPage} of {Math.ceil(totalRows / rowsPerPage)}
+        </span>
       </Box>
-
-   
     </>
   );
 };
-
 
 export default Messages;

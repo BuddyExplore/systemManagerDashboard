@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Grid, Container, Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField, Input } from '@mui/material';
 import TravelInfoBox from './components/travelInfoBox';
 import Kataragama from '../assets/images/places/kataragama.jpg';

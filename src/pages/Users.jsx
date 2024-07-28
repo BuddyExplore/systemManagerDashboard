@@ -113,6 +113,7 @@ const Users = () => {
     lastName: "",
     email: "",
     mobile: "",
+    password: "",
     role: "",
     status: "",
   });
@@ -151,6 +152,19 @@ const Users = () => {
   };
 
   const handleAddUser = () => {
+    setNewUser({
+      firstName: "John",
+      lastName: "Doe",
+      email: "john.doe@example.com",
+      mobile: "123-456-7890",
+      password: "password",
+      role: "Tourist",
+      status: "Approved",
+    });
+    setIsModalOpen(true);
+  };
+
+  const handleSaveUser = () => {
     console.log(newUser);
     handleCloseModal();
   };
@@ -393,6 +407,15 @@ const Users = () => {
             fullWidth
             margin="normal"
           />
+          <TextField
+            label="Password"
+            name="password"
+            type="password"
+            value={newUser.password}
+            onChange={handleInputChange}
+            fullWidth
+            margin="normal"
+          />
           <FormControl fullWidth margin="normal">
             <InputLabel>Role</InputLabel>
             <Select
@@ -426,10 +449,10 @@ const Users = () => {
           <Button
             variant="contained"
             color="primary"
-            onClick={handleAddUser}
+            onClick={handleSaveUser}
             fullWidth
           >
-            Add User
+            Save User
           </Button>
         </Box>
       </Modal>

@@ -105,7 +105,7 @@ const Dashboard = () => {
           },
         },
       },
-      colors: ['#0078A1', '#4B6D4F', '#39539E'], 
+      colors: ["#0078A1", "#4B6D4F", "#39539E"],
       labels: ["landmarks", "bookings", "blogs"],
       responsive: [
         {
@@ -120,7 +120,7 @@ const Dashboard = () => {
     },
   });
 
-    /*bar data*/
+  /*bar data*/
   const [bar, setBar] = useState({
     series: [
       {
@@ -192,7 +192,7 @@ const Dashboard = () => {
           },
         },
       },
-      colors: ['#0078A1', '#4B6D4F', '#70D6E3', '#39539E', '#D7A93B'], 
+      colors: ["#0078A1", "#4B6D4F", "#70D6E3", "#39539E", "#D7A93B"],
     },
   });
 
@@ -243,47 +243,50 @@ const Dashboard = () => {
           "Activity Manager",
         ],
       },
-      colors: ['#39539E'], 
+      colors: ["#39539E"],
     },
   });
 
-   /*area chart*/
-   const [area, setArea] = useState({
-    series: [{
-      name: 'car',
-      data: [31, 40, 28, 51, 42, 109, 100]
-    }, {
-      name: 'van',
-      data: [11, 32, 45, 32, 34, 52, 41]
-    }, {
-      name: 'threeWheel',
-      data: [9, 23, 41, 23, 10, 8, 10]
-    }],
+  /*area chart*/
+  const [area, setArea] = useState({
+    series: [
+      {
+        name: "car",
+        data: [31, 40, 28, 51, 42, 109, 100],
+      },
+      {
+        name: "van",
+        data: [11, 32, 45, 32, 34, 52, 41],
+      },
+      {
+        name: "threeWheel",
+        data: [9, 23, 41, 23, 10, 8, 10],
+      },
+    ],
     options: {
       chart: {
         height: 350,
-        type: 'area'
+        type: "area",
       },
       dataLabels: {
-        enabled: false
+        enabled: false,
       },
       stroke: {
-        curve: 'smooth'
+        curve: "smooth",
       },
       xaxis: {
-        type: 'date',
-        categories: ["Dec", "Jan", "Feb", "March", "April", "May", "June"]
+        type: "date",
+        categories: ["Dec", "Jan", "Feb", "March", "April", "May", "June"],
       },
       tooltip: {
         x: {
-          format: 'MM'
+          format: "MM",
         },
       },
-      colors: ['#0078A1', '#4B6D4F', '#39539E'], 
+      colors: ["#0078A1", "#4B6D4F", "#39539E"],
     },
   });
 
-  
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -401,16 +404,20 @@ const Dashboard = () => {
               position: "relative",
             }}
           >
-            <h4 className="mb-4 font-bold text-sm pt-4 px-4">1) Galewela</h4>
+            <h4 className="mb-4 font-bold text-sm pt-4 px-4">1) Madulsima</h4>
             <h6>
-              Galewela is a rural area town and it is located in Matale
-              district. This place has lot of historical places to watch.
+              Madulsima, situated in the Uva Province, offers breathtaking views
+              from its lush tea plantations and the famous Madulsima Mini
+              Worlds End. Its a serene escape from the bustling tourist spots.
             </h6>
             <hr style={{ marginTop: "30px", marginBottom: "30px" }} />
-            <h4 className="mb-4 font-bold text-sm pt-4 px-4">2) Galewela</h4>
+
+            <h4 className="mb-4 font-bold text-sm pt-4 px-4">2) Pooneryn</h4>
             <h6>
-              Galewela is a rural area town and it is located in Matale
-              district. This place has lot of historical places to watch.
+              Pooneryn, located in the Northern Province, is a quiet coastal
+              area with pristine beaches and a rich history. The Pooneryn Fort
+              is a testament to its colonial past and offers a glimpse into the
+              regions heritage.
             </h6>
           </div>
           <div className="logoWrapper flex justify-center items-center py-3 px-3">
@@ -425,7 +432,7 @@ const Dashboard = () => {
           display: "flex",
           justifyContent: "space-between",
           width: "100%",
-          marginTop:"50px",
+          marginTop: "50px",
           marginBottom: "50px",
         }}
       >
@@ -484,31 +491,33 @@ const Dashboard = () => {
         </div>
 
         <div
-        className="card mt-10 border-1 bg-white"
-        style={{
-          flex: 1,
-          margin: "0 10px",
-          border: "2px solid white",
-          backgroundColor: "white",
-          padding: "10px",
-          borderRadius: "10px",
-          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-          position: "relative",
-        }}
-      >
-        <h2 className="mb-4 font-bold text-sm pt-4 ">Most Used Travel Types</h2>
-        <div style={{ width: "100%", height: 300 }}>
-          <div id="chart">
-            <ReactApexChart
-              options={area.options}
-              series={area.series}
-              type="area"
-              height={250}
-            />
+          className="card mt-10 border-1 bg-white"
+          style={{
+            flex: 1,
+            margin: "0 10px",
+            border: "2px solid white",
+            backgroundColor: "white",
+            padding: "10px",
+            borderRadius: "10px",
+            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+            position: "relative",
+          }}
+        >
+          <h2 className="mb-4 font-bold text-sm pt-4 ">
+            Most Used Travel Types
+          </h2>
+          <div style={{ width: "100%", height: 300 }}>
+            <div id="chart">
+              <ReactApexChart
+                options={area.options}
+                series={area.series}
+                type="area"
+                height={250}
+              />
+            </div>
+            <div id="html-dist"></div>
           </div>
-          <div id="html-dist"></div>
         </div>
-      </div>
       </div>
     </>
   );

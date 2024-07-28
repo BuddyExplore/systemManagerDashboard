@@ -16,200 +16,95 @@ import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/system";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import dayjs from "dayjs";
+import TextField from "@mui/material/TextField";
+import Popover from '@mui/material/Popover';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
-/* Example user images */
-import user1 from "../assets/uploadImages/user1.png";
-import user2 from "../assets/uploadImages/user2.png";
-import user3 from "../assets/uploadImages/user3.png";
-import user4 from "../assets/uploadImages/user4.png";
-import user5 from "../assets/uploadImages/user5.jpeg";
-
-/* Table data */
+// Table data
 function createData(
   tripId,
-  vehicle,
-  firstName,
-  lastName,
-  email,
+  startLocation,
+  destination,
   numberOfPeople,
   numberOfDays,
   from,
   to,
   status,
-  image
 ) {
   return {
     tripId,
-    vehicle,
-    firstName,
-    lastName,
-    email,
+    startLocation,
+    destination,
     numberOfPeople,
     numberOfDays,
     from,
     to,
     status,
-    image,
   };
 }
 
 const rows = [
   createData(
     1,
-    "Car",
-    "John",
-    "Doe",
-    "john.doe@example.com",
+    "New York",
+    "Los Angeles",
     2,
     5,
     "2024-07-01",
     "2024-07-06",
     "Approved",
-    user1
   ),
   createData(
     2,
-    "Bus",
-    "Jane",
-    "Smith",
-    "jane.smith@example.com",
+    "Boston",
+    "Chicago",
     45,
     1,
     "2024-07-10",
     "2024-07-11",
     "Rejected",
-    user2
   ),
   createData(
     3,
-    "Bike",
-    "Alice",
-    "Johnson",
-    "alice.johnson@example.com",
+    "San Francisco",
+    "Seattle",
     1,
     3,
     "2024-07-15",
     "2024-07-18",
     "Pending",
-    user3
   ),
   createData(
     4,
-    "Van",
-    "Bob",
-    "Brown",
-    "bob.brown@example.com",
+    "Miami",
+    "Orlando",
     8,
     7,
     "2024-07-20",
     "2024-07-27",
     "Approved",
-    user4
   ),
   createData(
     5,
-    "Car",
-    "Charlie",
-    "Davis",
-    "charlie.davis@example.com",
+    "Dallas",
+    "Houston",
     4,
     2,
     "2024-07-22",
     "2024-07-24",
     "Pending",
-    user5
-  ),
-  createData(
-    6,
-    "Car",
-    "Charlie",
-    "Davis",
-    "charlie.davis@example.com",
-    4,
-    2,
-    "2024-07-22",
-    "2024-07-24",
-    "Pending",
-    user5
-  ),
-  createData(
-    7,
-    "Car",
-    "Charlie",
-    "Davis",
-    "charlie.davis@example.com",
-    4,
-    2,
-    "2024-07-22",
-    "2024-07-24",
-    "Pending",
-    user5
-  ),
-  createData(
-    8,
-    "Car",
-    "Charlie",
-    "Davis",
-    "charlie.davis@example.com",
-    4,
-    2,
-    "2024-07-22",
-    "2024-07-24",
-    "Pending",
-    user5
-  ),
-  createData(
-    9,
-    "Car",
-    "Charlie",
-    "Davis",
-    "charlie.davis@example.com",
-    4,
-    2,
-    "2024-07-22",
-    "2024-07-24",
-    "Pending",
-    user5
-  ),
-  createData(
-    10,
-    "Car",
-    "Charlie",
-    "Davis",
-    "charlie.davis@example.com",
-    4,
-    2,
-    "2024-07-22",
-    "2024-07-24",
-    "Pending",
-    user5
-  ),
-  createData(
-    11,
-    "Car",
-    "Charlie",
-    "Davis",
-    "charlie.davis@example.com",
-    4,
-    2,
-    "2024-07-22",
-    "2024-07-24",
-    "Pending",
-    user5
-  ),
-  createData(
-    12,
-    "Car",
-    "Charlie",
-    "Davis",
-    "charlie.davis@example.com",
-    4,
-    2,
-    "2024-07-22",
-    "2024-07-24",
-    "Pending",
-    user5
-  ),
+  )
 ];
 
 const CustomIconButton = styled(IconButton)({
@@ -222,9 +117,12 @@ const Trips = () => {
   }, []);
 
   const [anchorEl, setAnchorEl] = useState(null);
-  const [filterByVehicle, setFilterByVehicle] = useState("");
   const [filterByStatus, setFilterByStatus] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [dateRange, setDateRange] = useState([null, null]);
+  const [sortOrder, setSortOrder] = useState("");
+  const [dateFilterOption, setDateFilterOption] = useState('Last 30 Days');
+  const [dateFilterAnchorEl, setDateFilterAnchorEl] = useState(null);
 
   const rowsPerPage = 10;
 
@@ -236,12 +134,60 @@ const Trips = () => {
     setAnchorEl(null);
   };
 
-  const handleVehicleFilterChange = (event) => {
-    setFilterByVehicle(event.target.value);
-  };
-
   const handleStatusFilterChange = (event) => {
     setFilterByStatus(event.target.value);
+  };
+
+  const handleDateFilterClick = (event) => {
+    setDateFilterAnchorEl(event.currentTarget);
+  };
+
+  const handleDateFilterClose = () => {
+    setDateFilterAnchorEl(null);
+  };
+
+  const handleDateFilterOptionChange = (option) => {
+    setDateFilterOption(option);
+    // Set date range based on option
+    const now = dayjs();
+    let newDateRange = [null, null];
+    switch (option) {
+      case 'Today':
+        newDateRange = [now.startOf('day'), now.endOf('day')];
+        break;
+      case 'Yesterday':
+        newDateRange = [now.subtract(1, 'day').startOf('day'), now.subtract(1, 'day').endOf('day')];
+        break;
+      case 'Last 7 Days':
+        newDateRange = [now.subtract(7, 'days').startOf('day'), now.endOf('day')];
+        break;
+      case 'Last 30 Days':
+        newDateRange = [now.subtract(30, 'days').startOf('day'), now.endOf('day')];
+        break;
+      case 'This Month':
+        newDateRange = [now.startOf('month'), now.endOf('month')];
+        break;
+      case 'Last Month':
+        newDateRange = [now.subtract(1, 'month').startOf('month'), now.subtract(1, 'month').endOf('month')];
+        break;
+      case 'Custom Range':
+        // Don't set date range for custom option
+        break;
+      default:
+        break;
+    }
+    setDateRange(newDateRange);
+    if (option !== 'Custom Range') {
+      handleDateFilterClose();
+    }
+  };
+
+  const handleDateRangeChange = (newRange) => {
+    setDateRange(newRange);
+  };
+
+  const handleSortOrderChange = (event) => {
+    setSortOrder(event.target.value);
   };
 
   const handlePageChange = (event, value) => {
@@ -261,52 +207,38 @@ const Trips = () => {
     }
   };
 
+  const filterByDateRange = (row) => {
+    if (!dateRange[0] || !dateRange[1]) return true;
+    const fromDate = dayjs(row.from);
+    const toDate = dayjs(row.to);
+    return fromDate.isAfter(dateRange[0]) && toDate.isBefore(dateRange[1]);
+  };
+
   const filteredRows = rows.filter((row) => {
     return (
-      (!filterByVehicle || row.vehicle === filterByVehicle) &&
-      (!filterByStatus || row.status === filterByStatus)
+      (!filterByStatus || row.status === filterByStatus) &&
+      filterByDateRange(row)
     );
   });
 
+  if (sortOrder === "newest") {
+    filteredRows.sort((a, b) => new Date(b.from) - new Date(a.from));
+  } else if (sortOrder === "oldest") {
+    filteredRows.sort((a, b) => new Date(a.from) - new Date(b.from));
+  }
+
   const totalRows = filteredRows.length;
 
-  // Calculate the correct start and end indices for slicing
   const startIdx = (currentPage - 1) * rowsPerPage;
   const endIdx = startIdx + rowsPerPage;
   const paginatedRows = filteredRows.slice(startIdx, endIdx);
 
-  const uniqueVehicles = [...new Set(rows.map((row) => row.vehicle))];
   const uniqueStatuses = [...new Set(rows.map((row) => row.status))];
 
   return (
     <>
       <Box sx={{ alignItems: "right", textAlign: "right" }}>
         <div className="d-flex justify-content-end align-items-center mt-24 mb-1 px-4">
-          <FormControl
-            style={{
-              minWidth: 150,
-              minHeight: 50,
-              marginRight: "20px",
-              borderRadius: "10px",
-            }}
-          >
-            <InputLabel>Filter By Vehicle</InputLabel>
-            <Select
-              value={filterByVehicle}
-              onChange={handleVehicleFilterChange}
-              label="Filter By Vehicle"
-            >
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              {uniqueVehicles.map((vehicle) => (
-                <MenuItem key={vehicle} value={vehicle}>
-                  {vehicle}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-
           <FormControl
             variant="outlined"
             style={{
@@ -332,16 +264,96 @@ const Trips = () => {
               ))}
             </Select>
           </FormControl>
+
+          <Button
+            onClick={handleDateFilterClick}
+            variant="outlined"
+            endIcon={<ArrowDropDownIcon />}
+            style={{ marginRight: "20px" }}
+          >
+            {dateFilterOption}
+          </Button>
+          <Popover
+            open={Boolean(dateFilterAnchorEl)}
+            anchorEl={dateFilterAnchorEl}
+            onClose={handleDateFilterClose}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'left',
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'left',
+            }}
+          >
+            <Box sx={{ display: 'flex' }}>
+              <List>
+                <ListItem button onClick={() => handleDateFilterOptionChange('Today')}>
+                  <ListItemText primary="Today" />
+                </ListItem>
+                <ListItem button onClick={() => handleDateFilterOptionChange('Yesterday')}>
+                  <ListItemText primary="Yesterday" />
+                </ListItem>
+                <ListItem button onClick={() => handleDateFilterOptionChange('Last 7 Days')}>
+                  <ListItemText primary="Last 7 Days" />
+                </ListItem>
+                <ListItem button onClick={() => handleDateFilterOptionChange('Last 30 Days')}>
+                  <ListItemText primary="Last 30 Days" />
+                </ListItem>
+                <ListItem button onClick={() => handleDateFilterOptionChange('This Month')}>
+                  <ListItemText primary="This Month" />
+                </ListItem>
+                <ListItem button onClick={() => handleDateFilterOptionChange('Last Month')}>
+                  <ListItemText primary="Last Month" />
+                </ListItem>
+                <ListItem button onClick={() => handleDateFilterOptionChange('Custom Range')}>
+                  <ListItemText primary="Custom Range" />
+                </ListItem>
+              </List>
+              {dateFilterOption === 'Custom Range' && (
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DateRangePicker
+                    value={dateRange}
+                    onChange={handleDateRangeChange}
+                    renderInput={(startProps, endProps) => (
+                      <>
+                        <TextField {...startProps} />
+                        <Box sx={{ mx: 2 }}> to </Box>
+                        <TextField {...endProps} />
+                      </>
+                    )}
+                  />
+                </LocalizationProvider>
+              )}
+            </Box>
+          </Popover>
+
+          <FormControl
+            variant="outlined"
+            style={{
+              minWidth: 150,
+              minHeight: 50,
+              borderRadius: "100px",
+            }}
+          >
+            <InputLabel>Sort By</InputLabel>
+            <Select value={sortOrder} onChange={handleSortOrderChange} label="Sort By">
+              <MenuItem value="">
+                <em>None</em>
+              </MenuItem>
+              <MenuItem value="newest">Newest</MenuItem>
+              <MenuItem value="oldest">Oldest</MenuItem>
+            </Select>
+          </FormControl>
         </div>
       </Box>
 
       <div
-        className="card border-2 bg-white"
+        className="table-responsive py-3 px-5"
         style={{
-          border: "1px solid #ddd",
+          background: "white",
           borderRadius: "10px",
-          padding: "15px",
-          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+          boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.1)",
           marginTop: "30px",
         }}
       >
@@ -351,79 +363,66 @@ const Trips = () => {
               <TableHead>
                 <TableRow>
                   <TableCell sx={{ fontWeight: 'bold'}}>Trip ID</TableCell>
-                  <TableCell sx={{ fontWeight: 'bold'}}>Vehicle</TableCell>
-                  <TableCell sx={{ fontWeight: 'bold'}}>User</TableCell>
+                  <TableCell sx={{ fontWeight: 'bold'}}>Start location</TableCell>
+                  <TableCell sx={{ fontWeight: 'bold'}}>Destination</TableCell>
                   <TableCell sx={{ fontWeight: 'bold'}}>Number of people</TableCell>
                   <TableCell sx={{ fontWeight: 'bold'}}>Number of days</TableCell>
                   <TableCell sx={{ fontWeight: 'bold'}}>From</TableCell>
                   <TableCell sx={{ fontWeight: 'bold'}}>To</TableCell>
+                  <TableCell sx={{ fontWeight: 'bold'}}>Bookings</TableCell>
+                  <TableCell sx={{ fontWeight: 'bold'}}>Special Requests</TableCell>
                   <TableCell sx={{ fontWeight: 'bold'}}>Status</TableCell>
-                  <TableCell sx={{ fontWeight: 'bold'}}>Action</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {paginatedRows.map((row) => (
-                    <TableRow
-                      key={row.tripId}
-                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                    >
-                      <TableCell component="th" scope="row">
-                        {row.tripId}
-                      </TableCell>
-                      <TableCell>{row.vehicle}</TableCell>
-                      <TableCell>
-                        <div style={styles.userCell}>
-                          <img
-                            src={row.image}
-                            alt="user"
-                            style={styles.userImage}
-                          />
-                          <div>
-                            <div>
-                              {row.firstName} {row.lastName}
-                            </div>
-                            <div style={styles.userEmail}>{row.email}</div>
-                          </div>
-                        </div>
-                      </TableCell>
-                      <TableCell>{row.numberOfPeople}</TableCell>
-                      <TableCell>{row.numberOfDays}</TableCell>
-                      <TableCell>{row.from}</TableCell>
-                      <TableCell>{row.to}</TableCell>
-                      <TableCell
-                        style={{ color: getStatusColor(row.status) }}
-                      >
-                        {row.status}
-                      </TableCell>
-                      <TableCell>
-                        <CustomIconButton onClick={handleClick}>
-                          <MoreVertIcon />
-                        </CustomIconButton>
-                        <Menu
-                          anchorEl={anchorEl}
-                          keepMounted
-                          open={Boolean(anchorEl)}
-                          onClose={handleClose}
-                        >
-                          <MenuItem onClick={handleClose}>
-                            More Details
-                          </MenuItem>
-                          <MenuItem onClick={handleClose}>
-                            Update Trip
-                          </MenuItem>
-                          <MenuItem onClick={handleClose}>
-                            Delete Trip
-                          </MenuItem>
-                          <MenuItem onClick={handleClose}>
-                            Make Trip Disable
-                          </MenuItem>
-                          <MenuItem onClick={handleClose}>
-                            Complain Trip
-                          </MenuItem>
-                        </Menu>
-                      </TableCell>
-                    </TableRow>
-                  ))}
+                  <TableRow
+                    key={row.tripId}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell component="th" scope="row">
+                      {row.tripId}
+                    </TableCell>
+                    <TableCell>{row.startLocation}</TableCell>
+                    <TableCell>{row.destination}</TableCell>
+                    <TableCell>{row.numberOfPeople}</TableCell>
+                    <TableCell>{row.numberOfDays}</TableCell>
+                    <TableCell>{row.from}</TableCell>
+                    <TableCell>{row.to}</TableCell>
+                    <TableCell>
+                      <Button variant="outlined">View Bookings</Button>
+                    </TableCell>
+                    <TableCell>
+                      <Button variant="outlined">View Notes</Button>
+                    </TableCell>
+                    <TableCell style={{ color: getStatusColor(row.status) }}>
+                      {row.status}
+                    </TableCell>
+                    <TableCell>
+                  <CustomIconButton onClick={handleClick}>
+                    <MoreVertIcon />
+                  </CustomIconButton>
+                  <Menu
+                    anchorEl={anchorEl}
+                    open={Boolean(anchorEl)}
+                    onClose={handleClose}
+                  >
+                    <MenuItem onClick={handleClose}>
+                      <VisibilityIcon />
+                      <span style={{ marginLeft: "8px" }}>View</span>
+                    </MenuItem>
+                    <MenuItem onClick={handleClose}>
+                      <EditIcon />
+                      <span style={{ marginLeft: "8px" }}>Edit</span>
+                    </MenuItem>
+                    <MenuItem onClick={handleClose}>
+                      <DeleteIcon />
+                      <span style={{ marginLeft: "8px" }}>Delete</span>
+                    </MenuItem>
+                  </Menu>
+                </TableCell>
+                  </TableRow>
+                ))}
               </TableBody>
             </Table>
           </TableContainer>
@@ -455,34 +454,6 @@ const Trips = () => {
       </Box>
     </>
   );
-};
-
-const styles = {
-  userCell: {
-    display: "flex",
-    alignItems: "center",
-  },
-  userImage: {
-    width: 40,
-    height: 40,
-    borderRadius: "50%",
-    marginRight: 10,
-  },
-  userEmail: {
-    fontSize: 12,
-    color: "gray",
-  },
-  modalBox: {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: 400,
-    bgcolor: "background.paper",
-    borderRadius: "10px",
-    boxShadow: 24,
-    p: 4,
-  },
 };
 
 export default Trips;
