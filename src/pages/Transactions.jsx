@@ -179,7 +179,7 @@ const Transactions = () => {
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6} md={3}>
             <TransactionCard
-              title="Revenue Status"
+              title="Total Revenue"
               value="Rs. 3000"
               chartType="bar"
               data={data3}
@@ -206,7 +206,7 @@ const Transactions = () => {
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
             <TransactionCard
-              title="Revenue Status"
+              title="Monthly Revenue"
               value="Rs. 5470"
               chartType="bar"
               data={data3}
@@ -252,7 +252,7 @@ const Transactions = () => {
           }}
         >
           <h2 className="mb-4 font-bold text-sm pt-4 px-4">
-            Transaction Details
+            Trip Transaction Details
           </h2>
 
           <div className="table-responsive py-3 px-5">
@@ -344,7 +344,7 @@ const Transactions = () => {
         </div>
       </div>
 
-      <div
+      {/*<div
         className="card mt-14 border-1 bg-white"
         style={{
           borderRadius: "10px",
@@ -354,7 +354,7 @@ const Transactions = () => {
           marginBottom:"50px"
         }}
       >
-        {/*<h2 className="mb-4 font-bold text-sm pt-4 px-4">Line Chart Example</h2>*/}
+        <h2 className="mb-4 font-bold text-sm pt-4 px-4">Line Chart Example</h2>
         <div style={{ width: "100%", height: 350, }}>
           <div id="chart">
             <ReactApexChart
@@ -366,7 +366,7 @@ const Transactions = () => {
           </div>
           <div id="html-dist"></div>
         </div>
-      </div>
+      </div>*/}
 
     </>
   );

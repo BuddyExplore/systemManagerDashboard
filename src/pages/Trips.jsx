@@ -235,6 +235,11 @@ const Trips = () => {
 
   const uniqueStatuses = [...new Set(rows.map((row) => row.status))];
 
+  const grayButtonStyle = {
+    color: 'gray',
+    borderColor: 'gray',
+  };
+
   return (
     <>
       <Box sx={{ alignItems: "right", textAlign: "right" }}>
@@ -250,6 +255,7 @@ const Trips = () => {
           >
             <InputLabel>Filter By Status</InputLabel>
             <Select
+            variant="outlined"
               value={filterByStatus}
               onChange={handleStatusFilterChange}
               label="Filter By Status"
@@ -267,9 +273,8 @@ const Trips = () => {
 
           <Button
             onClick={handleDateFilterClick}
-            variant="outlined"
             endIcon={<ArrowDropDownIcon />}
-            style={{ marginRight: "20px" }}
+            style={{ marginRight: "20px", minHeight: 55, border: "1px solid rgb(128,128,128,0.5)", ...grayButtonStyle }}
           >
             {dateFilterOption}
           </Button>
@@ -365,13 +370,14 @@ const Trips = () => {
                   <TableCell sx={{ fontWeight: 'bold'}}>Trip ID</TableCell>
                   <TableCell sx={{ fontWeight: 'bold'}}>Start location</TableCell>
                   <TableCell sx={{ fontWeight: 'bold'}}>Destination</TableCell>
-                  <TableCell sx={{ fontWeight: 'bold'}}>Number of people</TableCell>
-                  <TableCell sx={{ fontWeight: 'bold'}}>Number of days</TableCell>
+                  <TableCell sx={{ fontWeight: 'bold'}}>No of people</TableCell>
+                  <TableCell sx={{ fontWeight: 'bold'}}>No of days</TableCell>
                   <TableCell sx={{ fontWeight: 'bold'}}>From</TableCell>
                   <TableCell sx={{ fontWeight: 'bold'}}>To</TableCell>
                   <TableCell sx={{ fontWeight: 'bold'}}>Bookings</TableCell>
                   <TableCell sx={{ fontWeight: 'bold'}}>Special Requests</TableCell>
                   <TableCell sx={{ fontWeight: 'bold'}}>Status</TableCell>
+                  <TableCell sx={{ fontWeight: 'bold'}}></TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -390,37 +396,19 @@ const Trips = () => {
                     <TableCell>{row.from}</TableCell>
                     <TableCell>{row.to}</TableCell>
                     <TableCell>
-                      <Button variant="outlined">View Bookings</Button>
+                      <Button variant="outlined" style={grayButtonStyle}>Bookings</Button>
                     </TableCell>
                     <TableCell>
-                      <Button variant="outlined">View Notes</Button>
+                      <Button variant="outlined" style={grayButtonStyle}>Notes</Button>
                     </TableCell>
                     <TableCell style={{ color: getStatusColor(row.status) }}>
                       {row.status}
                     </TableCell>
                     <TableCell>
-                  <CustomIconButton onClick={handleClick}>
-                    <MoreVertIcon />
-                  </CustomIconButton>
-                  <Menu
-                    anchorEl={anchorEl}
-                    open={Boolean(anchorEl)}
-                    onClose={handleClose}
-                  >
-                    <MenuItem onClick={handleClose}>
+                      <CustomIconButton onClick={handleClick}>
                       <VisibilityIcon />
-                      <span style={{ marginLeft: "8px" }}>View</span>
-                    </MenuItem>
-                    <MenuItem onClick={handleClose}>
-                      <EditIcon />
-                      <span style={{ marginLeft: "8px" }}>Edit</span>
-                    </MenuItem>
-                    <MenuItem onClick={handleClose}>
-                      <DeleteIcon />
-                      <span style={{ marginLeft: "8px" }}>Delete</span>
-                    </MenuItem>
-                  </Menu>
-                </TableCell>
+                      </CustomIconButton>
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>

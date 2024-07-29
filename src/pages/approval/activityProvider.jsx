@@ -82,7 +82,7 @@ const rows = [
   ),
 ];
 
-const tourGuide = () => {
+const activityProvider = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -287,4 +287,4 @@ const tourGuide = () => {
   );
 };
 
-export default tourGuide;
+export default activityProvider;

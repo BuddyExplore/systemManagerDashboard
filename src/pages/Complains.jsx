@@ -68,7 +68,7 @@ const Complains = () => {
                   <TableCell>Complain Date</TableCell>
                   <TableCell>Description</TableCell>
                   <TableCell>Status</TableCell>
-                  <TableCell>Actions</TableCell>
+                  <TableCell></TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -84,15 +84,10 @@ const Complains = () => {
                     <TableCell>{row.description}</TableCell>
                     <TableCell>{row.status}</TableCell>
                     <TableCell>
-                      <IconButton onClick={() => console.log('View', row.id)}>
-                        <VisibilityIcon />
-                      </IconButton>
                       <IconButton onClick={() => console.log('Edit', row.id)}>
                         <EditIcon />
                       </IconButton>
-                      <IconButton onClick={() => console.log('Delete', row.id)}>
-                        <DeleteIcon />
-                      </IconButton>
+                     
                     </TableCell>
                   </TableRow>
                 ))}

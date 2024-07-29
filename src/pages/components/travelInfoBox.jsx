@@ -14,7 +14,7 @@ const TravelInfoBox = ({ id, title, content, image, handleActionClick }) => {
   };
 
   return (
-    <Card sx={{ maxWidth: 345, margin: 2, position: 'relative' }}>
+    <Card sx={{ maxWidth: 345, margin: 2, position: 'relative' , padding:"20px"}}>
       <CardMedia
         component="img"
         alt={title}

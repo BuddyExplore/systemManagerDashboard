@@ -27,7 +27,7 @@ const rows = [
     tripFee: 300,
     otherMembers: null,
   },
-  // Add more rows as needed
+
 ];
 
 const VehicleBreakdowns = () => {
@@ -41,11 +41,10 @@ const VehicleBreakdowns = () => {
 
   return (
     <Container>
-      <Box sx={{ flexGrow: 1, marginTop: 10 }}>
-        <h2 className="mb-4 font-bold text-sm pt-4 px-4">Vehicle Breakdowns</h2>
-        <Grid container spacing={4}>
+      <Box sx={{ flexGrow: 1, marginTop: 12 }}>
+        <Grid container spacing={2}>
           {rows.map((row, index) => (
-            <Grid item xs={12} sm={6} md={4} key={index}>
+            <Grid item xs={12} sm={6} md={4} p={4} rounded-lg key={index}>
               <VehicleBreakdownBox
                 breakdownReason={row.breakdownReason}
                 vehicleOwnerId={row.vehicleOwnerId}

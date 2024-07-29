@@ -24,11 +24,11 @@ const VehicleBreakdownBox = ({
     setProfileAnchorEl(null);
   };
 
-  return (
+  return  (
     <Card style={styles.card}>
       <CardContent style={styles.cardContent}>
         <Typography gutterBottom variant="h5" component="div">
-          Breakdown Reason: {breakdownReason}
+          Reason: <span style={{ fontWeight: 'bold' }}>{breakdownReason}</span>
         </Typography>
         <Typography variant="body2" color="text.secondary">
           <strong>Vehicle Owner ID:</strong> {vehicleOwnerId}
@@ -94,23 +94,31 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     height: "100%",
+    borderRadius: "15px", 
+    boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.3)", 
   },
   cardContent: {
     flexGrow: 1,
     overflowY: "auto",
     maxHeight: 300,
+    padding: "16px",
+    backgroundColor: "#f9f9f9", 
+    alignItems: "center",
+    justifyContent: "center",
   },
   buttonContainer: {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+    padding: "8px",
   },
   button: {
     margin: 5,
     width: "90%",
-    backgroundColor: "#4B6D4F",
+    backgroundColor: "#0078A1",
     color: "white",
     borderRadius: "20px",
+    textTransform: "none", 
   },
 };
 

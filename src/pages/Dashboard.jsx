@@ -420,8 +420,16 @@ const Dashboard = () => {
               regions heritage.
             </h6>
           </div>
-          <div className="logoWrapper flex justify-center items-center py-3 px-3">
-            <img src={Map} className="w-700 h-400 object-contain" />
+          <div className="w-[60%] logoWrapper flex justify-center items-center py-3 px-3 rounded-sm">
+          <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15843.611907249691!2d79.8611529!3d6.9022055!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae25963120b1509%3A0x2db2c18a68712863!2sUniversity%20of%20Colombo%20School%20of%20Computing%20(UCSC)!5e0!3m2!1sen!2slk!4v1721847025255!5m2!1sen!2slk"
+                    width="200%"
+                    height="100%"
+                    style={{ border: 0 , borderRadius: '10px' }}
+                    allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+              />
           </div>
           <div></div>
         </div>

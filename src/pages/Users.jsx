@@ -20,12 +20,6 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Modal from "@mui/material/Modal";
 
-/* Example user images */
-import user1 from "../assets/uploadImages/user1.png";
-import user2 from "../assets/uploadImages/user2.png";
-import user3 from "../assets/uploadImages/user3.png";
-import user4 from "../assets/uploadImages/user4.png";
-import user5 from "../assets/uploadImages/user5.jpeg";
 
 /* Table data */
 function createData(
@@ -36,9 +30,8 @@ function createData(
   mobile,
   role,
   status,
-  image
 ) {
-  return { id, firstName, lastName, email, mobile, role, status, image };
+  return { id, firstName, lastName, email, mobile, role, status, };
 }
 
 const rows = [
@@ -50,7 +43,6 @@ const rows = [
     "123-456-7890",
     "Tourist",
     "Approved",
-    user1
   ),
   createData(
     2,
@@ -60,7 +52,6 @@ const rows = [
     "098-765-4321",
     "Admin",
     "Rejected",
-    user2
   ),
   createData(
     3,
@@ -70,7 +61,6 @@ const rows = [
     "555-123-4567",
     "System Provider",
     "Pending",
-    user3
   ),
   createData(
     4,
@@ -80,7 +70,6 @@ const rows = [
     "777-888-9999",
     "Tourist",
     "Approved",
-    user4
   ),
   createData(
     5,
@@ -90,7 +79,6 @@ const rows = [
     "111-222-3333",
     "Admin",
     "Pending",
-    user5
   ),
 ];
 
@@ -245,9 +233,8 @@ const Users = () => {
             </Select>
           </FormControl>
 
-          <Button
-            variant="contained"
-            style={{ backgroundColor: "#0078A1", color: "white", borderShadow:"none" }} 
+          <Button     
+            style={{ backgroundColor: "#0078A1", color: "white", borderShadow:"none", minHeight: 55, minWidth:100}} 
             onClick={handleAddUser}
           >
             Add User
@@ -274,7 +261,7 @@ const Users = () => {
               <TableCell sx={{ fontWeight: 'bold'}}>Mobile No</TableCell>
               <TableCell sx={{ fontWeight: 'bold'}}>Role</TableCell>
               <TableCell sx={{ fontWeight: 'bold'}}>Status</TableCell>
-              <TableCell sx={{ fontWeight: 'bold'}}>Action</TableCell>
+              <TableCell sx={{ fontWeight: 'bold'}}></TableCell>
             </TableRow>
           </TableHead>
           
@@ -294,11 +281,6 @@ const Users = () => {
                       </TableCell>
                       <TableCell>
                         <div style={styles.userContainer}>
-                          <img
-                            src={row.image}
-                            alt={`${row.firstName} ${row.lastName}`}
-                            style={styles.userImage}
-                          />
                           <div style={styles.userInfo}>
                             <div>
                               {row.firstName} {row.lastName}

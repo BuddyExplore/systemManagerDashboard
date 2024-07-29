@@ -4,13 +4,11 @@ import Logo from "../assets/images/logo.png";
 import Button from "@mui/material/Button";
 import {
   MdOutlineDashboard,
-  MdOutlineMessage,
-  MdOutlineSettings,
   MdOutlineTravelExplore,
   MdCardTravel,
 } from "react-icons/md";
 import { FaAngleRight, FaCarCrash } from "react-icons/fa";
-import { IoDocumentAttachOutline, IoAnalyticsOutline } from "react-icons/io5";
+import { IoDocumentAttachOutline } from "react-icons/io5";
 import { GrTransaction, GrDocumentMissing } from "react-icons/gr";
 import { HiOutlineUserGroup } from "react-icons/hi2";
 
@@ -78,35 +76,39 @@ const Sidebar = () => {
 
           {/*approvals*/}
           <li>
-            <Button className={`w-full flex items-center ${activeTab === 3 ? "active" : ""}`} onClick={() => handleButtonClick(3, "")}>
-              <span className="icon w-[30px] h-[30px] flex items-center justify-center rounded-md">
-                <IoDocumentAttachOutline />
-              </span>
-              Approvals
-              <span className={`arrow ml-auto w-[25px] h-[25px] flex items-center justify-center ${activeTab === 3 && isToggleSubmenu ? "rotate" : ""}`}>
-                <FaAngleRight />
-              </span>
-            </Button>
-
-            {activeTab === 3 && isToggleSubmenu && (
-              <div className="submenuWrapper colapse">
-                <div className="submenu">
-                  <Button className="w-full flex items-center" onClick={() => handleSubmenuClick("/approvals/tourGuides")}>
-                    Tour Guides
-                  </Button>
-                  <Button className="w-full flex items-center" onClick={() => handleSubmenuClick("/approvals/vehicleOwners")}>
-                    Vehicle Owners
-                  </Button>
-                  <Button className="w-full flex items-center" onClick={() => handleSubmenuClick("/approvals/hotelManagers")}>
-                    Hotel Managers
-                  </Button>
-                  <Button className="w-full flex items-center" onClick={() => handleSubmenuClick("/approvals/activityProviders")}>
-                    Activity providers
-                  </Button>
-                </div>
+          <Button className={`w-full flex items-center ${activeTab === 3 ? "active" : ""}`} onClick={() => handleButtonClick(3, "")}>
+            <span className="icon w-[30px] h-[30px] flex items-center justify-center rounded-md">
+              <IoDocumentAttachOutline />
+            </span>
+            Approvals
+            <span className={`arrow ml-auto w-[25px] h-[25px] flex items-center justify-center ${activeTab === 3 && isToggleSubmenu ? "rotate" : ""}`}>
+              <FaAngleRight />
+            </span>
+          </Button>
+    
+          {activeTab === 3 && isToggleSubmenu && (
+            <div className="submenuWrapper colapse">
+              <div className="submenu">
+                <Button className="w-full flex items-center" onClick={() => handleSubmenuClick("/approval/tourGuide")}>
+                  Tour Guides
+                </Button>
+                <Button className="w-full flex items-center" onClick={() => handleSubmenuClick("/approval/vehicleOwner")}>
+                  Vehicle Owners
+                </Button>
+                <Button className="w-full flex items-center" onClick={() => handleSubmenuClick("/approval/hotelManager")}>
+                  Hotel Managers
+                </Button>
+                <Button className="w-full flex items-center" onClick={() => handleSubmenuClick("/approval/shopManager")}>
+                Shop Managers
+              </Button>
+                <Button className="w-full flex items-center" onClick={() => handleSubmenuClick("/approval/activityProvider")}>
+                  Activity Providers
+                </Button>
+            
               </div>
-            )}
-          </li>
+            </div>
+          )}
+        </li>
 
           {/*vehicle breakdowns*/}
           <li>
@@ -124,7 +126,7 @@ const Sidebar = () => {
               <span className="icon w-[30px] h-[30px] flex items-center justify-center rounded-md">
                 <GrTransaction />
               </span>
-              Transactions
+              Finance
             </Button>
           </li>
 
@@ -160,7 +162,7 @@ const Sidebar = () => {
             </Button>
           </li>*/}
 
-          {/*settings*/}
+          {/*settings
           <li>
             <Button className={`w-full flex items-center ${activeTab === 8 ? "active" : ""}`} onClick={() => handleButtonClick(8, "/settings")}>
               <span className="icon w-[30px] h-[30px] flex items-center justify-center rounded-md">
@@ -168,7 +170,7 @@ const Sidebar = () => {
               </span>
               Settings
             </Button>
-          </li>
+          </li>*/}
 
         </ul>
       </div>

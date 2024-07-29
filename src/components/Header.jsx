@@ -43,13 +43,13 @@ const Header = () => {
         return "Users";
       case "/trips":
         return "Trips";
-      case "/approvals/tourGuide":
+      case "/approval/tourGuide":
         return "Tour Guide Approval";
-      case "/approvals/vehicleOwner":
+      case "/approval/vehicleOwner":
         return "Vehicle Owner Approval";
-      case "/approvals/hotelManager":
+      case "/approval/hotelManager":
         return "Hotel Manager Approval";
-      case "/approvals/activityProvider":
+      case "/approval/activityProvider":
         return "Activity Provider Approval";
       case "/vehicleBreakdowns":
         return "VehicleBreakdowns";
@@ -100,7 +100,7 @@ const Header = () => {
       <h2 className="text-black-800 font-bold text-xl">{getPageName(path)}</h2>
 
       <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
-        <div
+       {/*  <div
           className="searchBox flex items-center bg-gray-100 rounded-full p-2 shadow-sm w-[300px]"
           style={{ backgroundColor: "white", marginRight: "20px" }}
         >
@@ -110,7 +110,7 @@ const Header = () => {
             className="w-full h-full pl-10 pr-4 py-2 outline-none rounded-full bg-gray-200 focus:bg-gray transition duration-200 font-sans"
             placeholder="Search here..."
           />
-        </div>
+        </div>*/}
 
         <Tooltip title="Notifications">
           <IconButton
