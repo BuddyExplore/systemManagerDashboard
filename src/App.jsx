@@ -19,7 +19,7 @@ import Complains from "./pages/Complains";
 import Analytics from "./pages/Analytics";
 import Settings from "./pages/Settings";
 
-import Login from "./pages/Login";
+import Login from "./pages/auth/Login";
 import ForgotPassword from "./pages/ForgotPassword";
 import NewPassword from "./pages/NewPassword";
 
@@ -32,6 +32,15 @@ function App() {
   return (
     <BrowserRouter>
       <MyContext.Provider value={values}>
+      <section className="main flex">
+      <div className="w-full">
+      <Routes>
+              <Route path="/login" exact={true} element={<Login />} />
+              <Route path="/forgotPassword" exact={true} element={<ForgotPassword />} />
+              <Route path="/newPassword" exact={true} element={<NewPassword />} />
+              </Routes>
+              </div></section>
+
         <section className="main flex">
           <div className="sidebarWrapper w-[17%]">
             <Sidebar />
@@ -41,10 +50,6 @@ function App() {
             <div className="space"></div>
             <Routes>
               <Route path="/" exact={true} element={<Dashboard />} />
-              <Route path="/login" exact={true} element={<Login />} />
-              <Route path="/forgotPassword" exact={true} element={<ForgotPassword />} />
-              <Route path="/newPassword" exact={true} element={<NewPassword />} />
-
               <Route path="/dashboard" exact={true} element={<Dashboard />} />
               <Route path="/users" exact={true} element={<Users />} />
               <Route path="/trips" exact={true} element={<Trips/>} />

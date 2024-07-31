@@ -199,8 +199,12 @@ const Messages = () => {
                       <TableCell>
                         {(row.status === "Unread" || row.status === "Read") && (
                           <Button
-                            variant="outlined"
-                            onClick={() => handleReply(row.id)}
+                          style={{
+                            color: "#0078A1",
+                            backgroundColor: "rgb(0, 120, 161,0.2)", 
+                            borderRadius: "4px",
+                            padding: "2px 8px",
+                          }}
                           >
                             Reply
                           </Button>
