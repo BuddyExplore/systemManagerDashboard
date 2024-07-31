@@ -43,6 +43,9 @@ const VehicleBreakdownBox = ({
           <strong>Vehicle Type:</strong> {vehicleType}
         </Typography>
         <Typography variant="body2" color="text.secondary">
+        <strong>Driver Contact Number:</strong> {location}
+      </Typography>
+        <Typography variant="body2" color="text.secondary">
           <strong>Location:</strong> {location}
         </Typography>
         <Typography variant="body2" color="text.secondary">
@@ -64,8 +67,8 @@ const VehicleBreakdownBox = ({
         <Button style={styles.button} onClick={() => handleActionClick("Assign a New Vehicle")}>
           Assign a New Vehicle
         </Button>
-        <Button style={styles.button} onClick={() => handleActionClick("Contact Driver")}>
-          Contact Driver
+        <Button style={styles.button} onClick={() => handleActionClick("Refund for Tourist")}>
+          Contact Another Driver
         </Button>
         <Button style={styles.button} onClick={() => handleActionClick("Refund for Tourist")}>
           Refund for Tourist

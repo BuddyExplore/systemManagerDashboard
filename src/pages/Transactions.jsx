@@ -234,11 +234,11 @@ const Transactions = () => {
           }}
         >
           <h2 className="mb-6 font-bold text-sm pt-4 px-4">
-            Transaction Calendar
+            Upcoming Transaction Dates
           </h2>
 
           <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DateCalendar defaultValue={dayjs("2024-07-22")} readOnly />
+            <DateCalendar defaultValue={dayjs("2024-08-05")} readOnly />
           </LocalizationProvider>
         </div>
 
@@ -252,7 +252,7 @@ const Transactions = () => {
           }}
         >
           <h2 className="mb-4 font-bold text-sm pt-4 px-4">
-            Trip Transaction Details
+            Recent Trip Transaction Details
           </h2>
 
           <div className="table-responsive py-3 px-5">

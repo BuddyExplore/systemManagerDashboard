@@ -14,17 +14,76 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 
 /* Table data */
-function createData(id, type, complainer, complainee, date, description, status) {
+function createData(
+  id,
+  type,
+  complainer,
+  complainee,
+  date,
+  description,
+  status
+) {
   return { id, type, complainer, complainee, date, description, status };
 }
 
 const rows = [
-  createData(1, "User", "John Doe", "Alice Smith", "2024-07-01", "Spam content", "Pending"),
-  createData(2, "Blog", "Alice Smith", "Jane Smith", "2024-07-02", "Inappropriate content", "Reviewed"),
-  createData(3, "User", "Jane Smith", "Doe Fernando", "2024-07-03", "Harassment", "Pending"),
-  createData(4, "Blog", "Doe Fernando", "Alice Johnson", "2024-07-04", "Copyright issue", "Resolved"),
-  createData(5, "User", "Alice Johnson", "John Doe", "2024-07-05", "Fake profile", "Reviewed"),
+  createData(
+    1,
+    "User",
+    "John Doe",
+    "Alice Smith",
+    "2024-07-01",
+    "Spam content",
+    "Pending"
+  ),
+  createData(
+    2,
+    "Blog",
+    "Alice Smith",
+    "Jane Smith",
+    "2024-07-02",
+    "Inappropriate content",
+    "Resolved"
+  ),
+  createData(
+    3,
+    "User",
+    "Jane Smith",
+    "Doe Fernando",
+    "2024-07-03",
+    "Harassment",
+    "Pending"
+  ),
+  createData(
+    4,
+    "Blog",
+    "Doe Fernando",
+    "Alice Johnson",
+    "2024-07-04",
+    "Copyright issue",
+    "Resolved"
+  ),
+  createData(
+    5,
+    "User",
+    "Alice Johnson",
+    "John Doe",
+    "2024-07-05",
+    "Fake profile",
+    "Resolved"
+  ),
 ];
+
+const getTypeColor = (type) => {
+  switch (type) {
+    case "User":
+      return "green";
+    case "Blog":
+      return "orange";
+    default:
+      return "black";
+  }
+};
 
 const Complains = () => {
   useEffect(() => {
@@ -61,13 +120,17 @@ const Complains = () => {
             <Table sx={{ minWidth: 650 }} aria-label="complaint table">
               <TableHead>
                 <TableRow>
-                  <TableCell>Complaint ID</TableCell>
-                  <TableCell>Type</TableCell>
-                  <TableCell>Complainer</TableCell>
-                  <TableCell>Complainee</TableCell>
-                  <TableCell>Complain Date</TableCell>
-                  <TableCell>Description</TableCell>
-                  <TableCell>Status</TableCell>
+                  <TableCell sx={{ fontWeight: "bold" }}>
+                    Complaint ID
+                  </TableCell>
+                  <TableCell sx={{ fontWeight: "bold" }}>Type</TableCell>
+                  <TableCell sx={{ fontWeight: "bold" }}>Complainer</TableCell>
+                  <TableCell sx={{ fontWeight: "bold" }}>Complainee</TableCell>
+                  <TableCell sx={{ fontWeight: "bold" }}>
+                    Complain Date
+                  </TableCell>
+                  <TableCell sx={{ fontWeight: "bold" }}>Description</TableCell>
+                  <TableCell sx={{ fontWeight: "bold" }}>Status</TableCell>
                   <TableCell></TableCell>
                 </TableRow>
               </TableHead>
@@ -77,17 +140,18 @@ const Complains = () => {
                     <TableCell component="th" scope="row">
                       {row.id}
                     </TableCell>
-                    <TableCell>{row.type}</TableCell>
+                    <TableCell style={{ color: getTypeColor(row.type) }}>
+                      {row.type}
+                    </TableCell>
                     <TableCell>{row.complainer}</TableCell>
                     <TableCell>{row.complainee}</TableCell>
                     <TableCell>{row.date}</TableCell>
                     <TableCell>{row.description}</TableCell>
                     <TableCell>{row.status}</TableCell>
                     <TableCell>
-                      <IconButton onClick={() => console.log('Edit', row.id)}>
+                      <IconButton onClick={() => console.log("Edit", row.id)}>
                         <EditIcon />
                       </IconButton>
-                     
                     </TableCell>
                   </TableRow>
                 ))}

@@ -5,9 +5,6 @@ import { useNavigate } from "react-router-dom";
 import loginWallpaper from '../assets/images/loginWallpaper.jpg';
 import CustomButton from './Custom/CustomButton';
 
-
-
-
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');

@@ -219,9 +219,9 @@ const vehicleOwner = () => {
                         >
                           View
                         </Button>
-                        <Button variant="contained" color="inherit" size="small" style={{ borderRadius: "10px" }}>
+                         {/*<Button variant="contained" color="inherit" size="small" style={{ borderRadius: "10px" }}>
                           Download
-                        </Button>
+                        </Button>*/}
                       </TableCell>
                       <TableCell style={{ color: getStatusColor(row.status) }}>
                         {row.status}

@@ -57,28 +57,28 @@ function createData(
 const rows = [
   createData(
     1,
-    "New York",
-    "Los Angeles",
+    "Galle",
+    "Jaffna",
     2,
     5,
     "2024-07-01",
     "2024-07-06",
-    "Approved",
+    "Completed",
   ),
   createData(
     2,
-    "Boston",
-    "Chicago",
+    "Nuwara Eliya",
+    "Galle",
     45,
     1,
     "2024-07-10",
     "2024-07-11",
-    "Rejected",
+    "Ongoing",
   ),
   createData(
     3,
-    "San Francisco",
-    "Seattle",
+    "Kataragama",
+    "Matara",
     1,
     3,
     "2024-07-15",
@@ -87,18 +87,18 @@ const rows = [
   ),
   createData(
     4,
-    "Miami",
-    "Orlando",
+    "Matara",
+    "Kandy",
     8,
     7,
     "2024-07-20",
     "2024-07-27",
-    "Approved",
+    "Completed",
   ),
   createData(
     5,
-    "Dallas",
-    "Houston",
+    "Hikkaduwa",
+    "Jaffna",
     4,
     2,
     "2024-07-22",
@@ -196,9 +196,9 @@ const Trips = () => {
 
   const getStatusColor = (status) => {
     switch (status) {
-      case "Approved":
+      case "Completed":
         return "green";
-      case "Rejected":
+      case "Ongoing":
         return "red";
       case "Pending":
         return "orange";

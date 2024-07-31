@@ -8,9 +8,9 @@ import {
   MdCardTravel,
 } from "react-icons/md";
 import { FaAngleRight, FaCarCrash } from "react-icons/fa";
-import { IoDocumentAttachOutline } from "react-icons/io5";
 import { GrTransaction, GrDocumentMissing } from "react-icons/gr";
 import { HiOutlineUserGroup } from "react-icons/hi2";
+import { FaRegHandshake } from "react-icons/fa6";
 
 const Sidebar = () => {
   const [activeTab, setActiveTab] = useState(0);
@@ -60,7 +60,7 @@ const Sidebar = () => {
               <span className="icon w-[30px] h-[30px] flex items-center justify-center rounded-md">
                 <HiOutlineUserGroup />
               </span>
-              Users
+              Tourists
             </Button>
           </li>
 
@@ -78,9 +78,9 @@ const Sidebar = () => {
           <li>
           <Button className={`w-full flex items-center ${activeTab === 3 ? "active" : ""}`} onClick={() => handleButtonClick(3, "")}>
             <span className="icon w-[30px] h-[30px] flex items-center justify-center rounded-md">
-              <IoDocumentAttachOutline />
+              <FaRegHandshake />
             </span>
-            Approvals
+            Service Providers
             <span className={`arrow ml-auto w-[25px] h-[25px] flex items-center justify-center ${activeTab === 3 && isToggleSubmenu ? "rotate" : ""}`}>
               <FaAngleRight />
             </span>

@@ -19,66 +19,32 @@ import { styled } from "@mui/system";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Modal from "@mui/material/Modal";
-
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 /* Table data */
-function createData(
-  id,
-  firstName,
-  lastName,
-  email,
-  mobile,
-  role,
-  status,
-) {
-  return { id, firstName, lastName, email, mobile, role, status, };
+function createData(id, firstName, lastName, email, mobile) {
+  return { id, firstName, lastName, email, mobile };
 }
 
 const rows = [
-  createData(
-    1,
-    "John",
-    "Doe",
-    "john.doe@example.com",
-    "123-456-7890",
-    "Tourist",
-    "Approved",
-  ),
-  createData(
-    2,
-    "Jane",
-    "Smith",
-    "jane.smith@example.com",
-    "098-765-4321",
-    "Admin",
-    "Rejected",
-  ),
+  createData(1, "Amash", "Sankalpa", "amash56@gmail.com", "078-2945789"),
+  createData(2, "Jane", "Smith", "jane.smith@example.com", "098-765-4321"),
   createData(
     3,
     "Alice",
     "Johnson",
     "alice.johnson@example.com",
-    "555-123-4567",
-    "System Provider",
-    "Pending",
+    "555-123-4567"
   ),
-  createData(
-    4,
-    "Bob",
-    "Brown",
-    "bob.brown@example.com",
-    "777-888-9999",
-    "Tourist",
-    "Approved",
-  ),
+  createData(4, "Bob", "Brown", "bob.brown@example.com", "777-888-9999"),
   createData(
     5,
     "Charlie",
     "Davis",
     "charlie.davis@example.com",
-    "111-222-3333",
-    "Admin",
-    "Pending",
+    "111-222-3333"
   ),
 ];
 
@@ -102,8 +68,6 @@ const Users = () => {
     email: "",
     mobile: "",
     password: "",
-    role: "",
-    status: "",
   });
   const rowsPerPage = 10;
 
@@ -141,13 +105,11 @@ const Users = () => {
 
   const handleAddUser = () => {
     setNewUser({
-      firstName: "John",
-      lastName: "Doe",
-      email: "john.doe@example.com",
-      mobile: "123-456-7890",
+      firstName: "Dilmi",
+      lastName: "Siriwardhana",
+      email: "dilmi@gmail.com",
+      mobile: "077-1234567",
       password: "password",
-      role: "Tourist",
-      status: "Approved",
     });
     setIsModalOpen(true);
   };
@@ -155,19 +117,6 @@ const Users = () => {
   const handleSaveUser = () => {
     console.log(newUser);
     handleCloseModal();
-  };
-
-  const getStatusColor = (status) => {
-    switch (status) {
-      case "Approved":
-        return "green";
-      case "Rejected":
-        return "red";
-      case "Pending":
-        return "orange";
-      default:
-        return "black";
-    }
   };
 
   const filteredRows = rows.filter((row) => {
@@ -187,10 +136,10 @@ const Users = () => {
     <>
       <Box sx={{ alignItems: "right", textAlign: "right" }}>
         <div className="d-flex justify-content-end align-items-center mt-24 mb-1 ">
-          <FormControl
+          {/*  <FormControl
             style={{ minWidth: 150, minHeight: 50, marginRight: "20px"}}
           >
-            <InputLabel>Filter By Role</InputLabel>
+            <InputLabel>Filter By ID</InputLabel>
             <Select
               value={filterByRole}
               onChange={handleRoleFilterChange}
@@ -231,10 +180,16 @@ const Users = () => {
                 </MenuItem>
               ))}
             </Select>
-          </FormControl>
+          </FormControl>*/}
 
-          <Button     
-            style={{ backgroundColor: "#0078A1", color: "white", borderShadow:"none", minHeight: 55, minWidth:100}} 
+          <Button
+            style={{
+              backgroundColor: "#0078A1",
+              color: "white",
+              borderShadow: "none",
+              minHeight: 55,
+              minWidth: 100,
+            }}
             onClick={handleAddUser}
           >
             Add User
@@ -254,17 +209,15 @@ const Users = () => {
         <div className="table-responsive py-3 px-5">
           <TableContainer>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
-            <TableHead>
-            <TableRow>
-              <TableCell sx={{ fontWeight: 'bold'}}>User ID</TableCell>
-              <TableCell sx={{ fontWeight: 'bold'}}>User</TableCell>
-              <TableCell sx={{ fontWeight: 'bold'}}>Mobile No</TableCell>
-              <TableCell sx={{ fontWeight: 'bold'}}>Role</TableCell>
-              <TableCell sx={{ fontWeight: 'bold'}}>Status</TableCell>
-              <TableCell sx={{ fontWeight: 'bold'}}></TableCell>
-            </TableRow>
-          </TableHead>
-          
+              <TableHead>
+                <TableRow>
+                  <TableCell sx={{ fontWeight: "bold" }}>Tourist ID</TableCell>
+                  <TableCell sx={{ fontWeight: "bold" }}>Tourist</TableCell>
+                  <TableCell sx={{ fontWeight: "bold" }}>Mobile No</TableCell>
+                  <TableCell sx={{ fontWeight: "bold" }}></TableCell>
+                </TableRow>
+              </TableHead>
+
               <TableBody>
                 {filteredRows
                   .slice(
@@ -290,33 +243,21 @@ const Users = () => {
                         </div>
                       </TableCell>
                       <TableCell>{row.mobile}</TableCell>
-                      <TableCell>{row.role}</TableCell>
-                      <TableCell style={{ color: getStatusColor(row.status) }}>
-                        {row.status}
-                      </TableCell>
+
                       <TableCell>
-                        <CustomIconButton
-                          aria-controls="simple-menu"
-                          aria-haspopup="true"
-                          onClick={handleClick}
+                        <IconButton
+                          onClick={() => console.log("Visible", row.id)}
                         >
-                          <MoreVertIcon />
-                        </CustomIconButton>
-                        <Menu
-                          anchorEl={anchorEl}
-                          keepMounted
-                          open={Boolean(anchorEl)}
-                          onClose={handleClose}
+                          <VisibilityIcon />
+                        </IconButton>
+                        <IconButton onClick={() => console.log("Edit", row.id)}>
+                          <EditIcon />
+                        </IconButton>
+                        <IconButton
+                          onClick={() => console.log("Delete", row.id)}
                         >
-                          <MenuItem onClick={handleClose}>Delete User</MenuItem>
-                          <MenuItem onClick={handleClose}>
-                            Disable User
-                          </MenuItem>
-                          <MenuItem onClick={handleClose}>Update User</MenuItem>
-                          <MenuItem onClick={handleClose}>
-                            View Profile
-                          </MenuItem>
-                        </Menu>
+                          <DeleteIcon />
+                        </IconButton>
                       </TableCell>
                     </TableRow>
                   ))}
