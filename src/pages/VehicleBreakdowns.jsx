@@ -9,6 +9,7 @@ const rows = [
     vehicleOwnerName: "John Doe",
     vehicleNumber: "XYZ123",
     vehicleType: "SUV",
+    mobileno: "077-2459087",
     location: "New York",
     numOfTravelers: 4,
     numOfDays: 3,
@@ -21,6 +22,7 @@ const rows = [
     vehicleOwnerName: "Jane Smith",
     vehicleNumber: "ABC456",
     vehicleType: "Sedan",
+    mobileno: "071-2312678",
     location: "Los Angeles",
     numOfTravelers: 2,
     numOfDays: 2,
@@ -52,6 +54,7 @@ const VehicleBreakdowns = () => {
                 vehicleNumber={row.vehicleNumber}
                 vehicleType={row.vehicleType}
                 location={row.location}
+                mobileno={row.mobileno}
                 numOfTravelers={row.numOfTravelers}
                 numOfDays={row.numOfDays}
                 tripFee={row.tripFee}

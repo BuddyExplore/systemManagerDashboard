@@ -71,14 +71,10 @@ const Transactions = () => {
     series: [
       {
         name: 'Net Profit',
-        data: [44, 55, 57, 56, 61, 58, 63, 60, 66],
-      },
-      {
-        name: 'Revenue',
         data: [76, 85, 101, 98, 87, 105, 91, 114, 94],
       },
       {
-        name: 'Free Cash Flow',
+        name: 'Expences',
         data: [35, 41, 36, 26, 45, 48, 52, 53, 41],
       },
     ],
@@ -118,7 +114,7 @@ const Transactions = () => {
           formatter: (val) => `Rs. ${val} thousands`,
         },
       },
-      colors: ['#0078A1', '#4B6D4F', '#39539E'], 
+      colors: [ '#4B6D4F', '#39539E'], 
     },
   });
 
@@ -174,7 +170,7 @@ const Transactions = () => {
 
   return (
     <>
-      {/*transaction cards*/}
+      {/*transaction cards
       <div style={{ marginTop: "100px" }}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6} md={3}>
@@ -214,13 +210,13 @@ const Transactions = () => {
             />
           </Grid>
         </Grid>
-      </div>
+      </div>*/}
 
       <div
         style={{
           display: "flex",
           justifyContent: "space-between",
-          marginTop: "60px",
+          marginTop: "100px",
         }}
       >
         <div
@@ -303,12 +299,13 @@ const Transactions = () => {
             padding: "15px",
             boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
             width: "35%",
+            
           }}
         >
           <h2 className="mb-4 font-bold text-sm pt-4 px-4">
             Transport Transactions
           </h2>
-          <div style={{ width: "100%", height: 300 }}>
+          <div style={{ width: "100%", height: 200 }}>
             <div id="chart">
               <ReactApexChart
                 options={pieChartState.options}

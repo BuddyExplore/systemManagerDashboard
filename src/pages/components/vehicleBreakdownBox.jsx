@@ -7,6 +7,7 @@ const VehicleBreakdownBox = ({
   vehicleOwnerName,
   vehicleNumber,
   vehicleType,
+  mobileno,
   location,
   numOfTravelers,
   numOfDays,
@@ -43,7 +44,7 @@ const VehicleBreakdownBox = ({
           <strong>Vehicle Type:</strong> {vehicleType}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-        <strong>Driver Contact Number:</strong> {location}
+        <strong>Driver Contact Number:</strong> {mobileno}
       </Typography>
         <Typography variant="body2" color="text.secondary">
           <strong>Location:</strong> {location}
@@ -64,16 +65,17 @@ const VehicleBreakdownBox = ({
         )}
       </CardContent>
       <CardActions style={styles.buttonContainer}>
-        <Button style={styles.button} onClick={() => handleActionClick("Assign a New Vehicle")}>
+        <Button style={styles.button1} onClick={() => handleActionClick("Assign a New Vehicle")}>
           Assign a New Vehicle
         </Button>
-        <Button style={styles.button} onClick={() => handleActionClick("Refund for Tourist")}>
-          Contact Another Driver
+        <Button style={styles.button2} onClick={() => handleActionClick("Refund for Tourist")}>
+          Contact Another Service
         </Button>
-        <Button style={styles.button} onClick={() => handleActionClick("Refund for Tourist")}>
+       
+       {/* <Button style={styles.button} onClick={() => handleActionClick("Refund for Tourist")}>
           Refund for Tourist
-        </Button>
-        <Button style={styles.button} onClick={handleProfileClick}>
+        </Button>*/}
+        <Button style={styles.button3} onClick={handleProfileClick}>
           View Profiles
         </Button>
         <Menu anchorEl={profileAnchorEl} keepMounted open={Boolean(profileAnchorEl)} onClose={handleProfileClose}>
@@ -84,7 +86,7 @@ const VehicleBreakdownBox = ({
             View Vehicle Owner Profile
           </MenuItem>
         </Menu>
-        <Button style={styles.button} onClick={() => handleActionClick("Mark as Resolved")}>
+        <Button style={styles.button4} onClick={() => handleActionClick("Mark as Resolved")}>
           Mark as Resolved
         </Button>
       </CardActions>
@@ -115,13 +117,41 @@ const styles = {
     alignItems: "center",
     padding: "8px",
   },
-  button: {
+  button1: {
     margin: 5,
     width: "90%",
-    backgroundColor: "#0078A1",
-    color: "white",
-    borderRadius: "20px",
     textTransform: "none", 
+    color: "#0078A1",
+    backgroundColor: "rgb(0, 120, 161,0.2)", 
+    borderRadius: "4px",
+    padding: "2px 8px",
+  },
+  button2: {
+    margin: 5,
+    width: "90%",
+    textTransform: "none", 
+    color: "green",
+        backgroundColor: "#d4edda",
+        borderRadius: "4px",
+        padding: "2px 8px",
+  },
+  button3: {
+    margin: 5,
+    width: "90%",
+    textTransform: "none", 
+    color: "orange",
+        backgroundColor: "#fff3cd",
+        borderRadius: "4px",
+        padding: "2px 8px",
+  },
+  button4: {
+    margin: 5,
+    width: "90%",
+    textTransform: "none", 
+    color: "red",
+    backgroundColor: "#f8d7da",
+    borderRadius: "4px",
+    padding: "2px 8px",
   },
 };
 

@@ -85,6 +85,25 @@ const getTypeColor = (type) => {
   }
 };
 
+const getStatusColor = (status) => {
+  if (status === "Resolved") {
+    return {
+      color: "green",
+      backgroundColor: "#d4edda",
+      borderRadius: "4px",
+      padding: "2px 8px",
+    };
+  } else if (status === "Pending") {
+    return {
+      color: "red",
+      backgroundColor: "#f8d7da",
+      borderRadius: "4px",
+      padding: "2px 8px",
+    };
+  }
+  return {};
+};
+
 const Complains = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -147,7 +166,9 @@ const Complains = () => {
                     <TableCell>{row.complainee}</TableCell>
                     <TableCell>{row.date}</TableCell>
                     <TableCell>{row.description}</TableCell>
-                    <TableCell>{row.status}</TableCell>
+                    <TableCell style={{ color: getStatusColor(row.status) }}>
+                      {row.status}
+                    </TableCell>
                     <TableCell>
                       <IconButton onClick={() => console.log("Edit", row.id)}>
                         <EditIcon />

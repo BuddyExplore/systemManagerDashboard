@@ -17,17 +17,17 @@ import Stack from "@mui/material/Stack";
 import { styled } from "@mui/system";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DateRangePicker } from "@mui/x-date-pickers-pro/DateRangePicker";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import dayjs from "dayjs";
 import TextField from "@mui/material/TextField";
-import Popover from '@mui/material/Popover';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import VisibilityIcon from '@mui/icons-material/Visibility';
+import Popover from "@mui/material/Popover";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
@@ -40,7 +40,7 @@ function createData(
   numberOfDays,
   from,
   to,
-  status,
+  status
 ) {
   return {
     tripId,
@@ -63,7 +63,7 @@ const rows = [
     5,
     "2024-07-01",
     "2024-07-06",
-    "Completed",
+    "Completed"
   ),
   createData(
     2,
@@ -73,7 +73,7 @@ const rows = [
     1,
     "2024-07-10",
     "2024-07-11",
-    "Ongoing",
+    "Ongoing"
   ),
   createData(
     3,
@@ -83,7 +83,7 @@ const rows = [
     3,
     "2024-07-15",
     "2024-07-18",
-    "Pending",
+    "Pending"
   ),
   createData(
     4,
@@ -93,7 +93,7 @@ const rows = [
     7,
     "2024-07-20",
     "2024-07-27",
-    "Completed",
+    "Completed"
   ),
   createData(
     5,
@@ -103,8 +103,8 @@ const rows = [
     2,
     "2024-07-22",
     "2024-07-24",
-    "Pending",
-  )
+    "Pending"
+  ),
 ];
 
 const CustomIconButton = styled(IconButton)({
@@ -121,7 +121,7 @@ const Trips = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [dateRange, setDateRange] = useState([null, null]);
   const [sortOrder, setSortOrder] = useState("");
-  const [dateFilterOption, setDateFilterOption] = useState('Last 30 Days');
+  const [dateFilterOption, setDateFilterOption] = useState("Last 30 Days");
   const [dateFilterAnchorEl, setDateFilterAnchorEl] = useState(null);
 
   const rowsPerPage = 10;
@@ -152,32 +152,44 @@ const Trips = () => {
     const now = dayjs();
     let newDateRange = [null, null];
     switch (option) {
-      case 'Today':
-        newDateRange = [now.startOf('day'), now.endOf('day')];
+      case "Today":
+        newDateRange = [now.startOf("day"), now.endOf("day")];
         break;
-      case 'Yesterday':
-        newDateRange = [now.subtract(1, 'day').startOf('day'), now.subtract(1, 'day').endOf('day')];
+      case "Yesterday":
+        newDateRange = [
+          now.subtract(1, "day").startOf("day"),
+          now.subtract(1, "day").endOf("day"),
+        ];
         break;
-      case 'Last 7 Days':
-        newDateRange = [now.subtract(7, 'days').startOf('day'), now.endOf('day')];
+      case "Last 7 Days":
+        newDateRange = [
+          now.subtract(7, "days").startOf("day"),
+          now.endOf("day"),
+        ];
         break;
-      case 'Last 30 Days':
-        newDateRange = [now.subtract(30, 'days').startOf('day'), now.endOf('day')];
+      case "Last 30 Days":
+        newDateRange = [
+          now.subtract(30, "days").startOf("day"),
+          now.endOf("day"),
+        ];
         break;
-      case 'This Month':
-        newDateRange = [now.startOf('month'), now.endOf('month')];
+      case "This Month":
+        newDateRange = [now.startOf("month"), now.endOf("month")];
         break;
-      case 'Last Month':
-        newDateRange = [now.subtract(1, 'month').startOf('month'), now.subtract(1, 'month').endOf('month')];
+      case "Last Month":
+        newDateRange = [
+          now.subtract(1, "month").startOf("month"),
+          now.subtract(1, "month").endOf("month"),
+        ];
         break;
-      case 'Custom Range':
+      case "Custom Range":
         // Don't set date range for custom option
         break;
       default:
         break;
     }
     setDateRange(newDateRange);
-    if (option !== 'Custom Range') {
+    if (option !== "Custom Range") {
       handleDateFilterClose();
     }
   };
@@ -195,18 +207,32 @@ const Trips = () => {
   };
 
   const getStatusColor = (status) => {
-    switch (status) {
-      case "Completed":
-        return "green";
-      case "Ongoing":
-        return "red";
-      case "Pending":
-        return "orange";
-      default:
-        return "black";
+    if (status === "Completed") {
+      return {
+        color: "green",
+        backgroundColor: "#d4edda",
+        borderRadius: "4px",
+        padding: "2px 8px",
+      };
+    } else if (status === "Pending") {
+      return {
+        color: "orange",
+        backgroundColor: "#fff3cd",
+        borderRadius: "4px",
+        padding: "2px 8px",
+      };
+    } else if (status === "Ongoing") {
+      return {
+        color: "red",
+        backgroundColor: "#f8d7da",
+        borderRadius: "4px",
+        padding: "2px 8px",
+      };
     }
+    return {};
   };
 
+  
   const filterByDateRange = (row) => {
     if (!dateRange[0] || !dateRange[1]) return true;
     const fromDate = dayjs(row.from);
@@ -236,8 +262,8 @@ const Trips = () => {
   const uniqueStatuses = [...new Set(rows.map((row) => row.status))];
 
   const grayButtonStyle = {
-    color: 'gray',
-    borderColor: 'gray',
+    color: "gray",
+    borderColor: "gray",
   };
 
   return (
@@ -255,7 +281,7 @@ const Trips = () => {
           >
             <InputLabel>Filter By Status</InputLabel>
             <Select
-            variant="outlined"
+              variant="outlined"
               value={filterByStatus}
               onChange={handleStatusFilterChange}
               label="Filter By Status"
@@ -274,7 +300,12 @@ const Trips = () => {
           <Button
             onClick={handleDateFilterClick}
             endIcon={<ArrowDropDownIcon />}
-            style={{ marginRight: "20px", minHeight: 55, border: "1px solid rgb(128,128,128,0.5)", ...grayButtonStyle }}
+            style={{
+              marginRight: "20px",
+              minHeight: 55,
+              border: "1px solid rgb(128,128,128,0.5)",
+              ...grayButtonStyle,
+            }}
           >
             {dateFilterOption}
           </Button>
@@ -283,39 +314,60 @@ const Trips = () => {
             anchorEl={dateFilterAnchorEl}
             onClose={handleDateFilterClose}
             anchorOrigin={{
-              vertical: 'bottom',
-              horizontal: 'left',
+              vertical: "bottom",
+              horizontal: "left",
             }}
             transformOrigin={{
-              vertical: 'top',
-              horizontal: 'left',
+              vertical: "top",
+              horizontal: "left",
             }}
           >
-            <Box sx={{ display: 'flex' }}>
+            <Box sx={{ display: "flex" }}>
               <List>
-                <ListItem button onClick={() => handleDateFilterOptionChange('Today')}>
+                <ListItem
+                  button
+                  onClick={() => handleDateFilterOptionChange("Today")}
+                >
                   <ListItemText primary="Today" />
                 </ListItem>
-                <ListItem button onClick={() => handleDateFilterOptionChange('Yesterday')}>
+                <ListItem
+                  button
+                  onClick={() => handleDateFilterOptionChange("Yesterday")}
+                >
                   <ListItemText primary="Yesterday" />
                 </ListItem>
-                <ListItem button onClick={() => handleDateFilterOptionChange('Last 7 Days')}>
+                <ListItem
+                  button
+                  onClick={() => handleDateFilterOptionChange("Last 7 Days")}
+                >
                   <ListItemText primary="Last 7 Days" />
                 </ListItem>
-                <ListItem button onClick={() => handleDateFilterOptionChange('Last 30 Days')}>
+                <ListItem
+                  button
+                  onClick={() => handleDateFilterOptionChange("Last 30 Days")}
+                >
                   <ListItemText primary="Last 30 Days" />
                 </ListItem>
-                <ListItem button onClick={() => handleDateFilterOptionChange('This Month')}>
+                <ListItem
+                  button
+                  onClick={() => handleDateFilterOptionChange("This Month")}
+                >
                   <ListItemText primary="This Month" />
                 </ListItem>
-                <ListItem button onClick={() => handleDateFilterOptionChange('Last Month')}>
+                <ListItem
+                  button
+                  onClick={() => handleDateFilterOptionChange("Last Month")}
+                >
                   <ListItemText primary="Last Month" />
                 </ListItem>
-                <ListItem button onClick={() => handleDateFilterOptionChange('Custom Range')}>
+                <ListItem
+                  button
+                  onClick={() => handleDateFilterOptionChange("Custom Range")}
+                >
                   <ListItemText primary="Custom Range" />
                 </ListItem>
               </List>
-              {dateFilterOption === 'Custom Range' && (
+              {dateFilterOption === "Custom Range" && (
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DateRangePicker
                     value={dateRange}
@@ -342,7 +394,11 @@ const Trips = () => {
             }}
           >
             <InputLabel>Sort By</InputLabel>
-            <Select value={sortOrder} onChange={handleSortOrderChange} label="Sort By">
+            <Select
+              value={sortOrder}
+              onChange={handleSortOrderChange}
+              label="Sort By"
+            >
               <MenuItem value="">
                 <em>None</em>
               </MenuItem>
@@ -367,17 +423,23 @@ const Trips = () => {
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
               <TableHead>
                 <TableRow>
-                  <TableCell sx={{ fontWeight: 'bold'}}>Trip ID</TableCell>
-                  <TableCell sx={{ fontWeight: 'bold'}}>Start location</TableCell>
-                  <TableCell sx={{ fontWeight: 'bold'}}>Destination</TableCell>
-                  <TableCell sx={{ fontWeight: 'bold'}}>No of people</TableCell>
-                  <TableCell sx={{ fontWeight: 'bold'}}>No of days</TableCell>
-                  <TableCell sx={{ fontWeight: 'bold'}}>From</TableCell>
-                  <TableCell sx={{ fontWeight: 'bold'}}>To</TableCell>
-                  <TableCell sx={{ fontWeight: 'bold'}}>Bookings</TableCell>
-                  <TableCell sx={{ fontWeight: 'bold'}}>Special Requests</TableCell>
-                  <TableCell sx={{ fontWeight: 'bold'}}>Status</TableCell>
-                  <TableCell sx={{ fontWeight: 'bold'}}></TableCell>
+                  <TableCell sx={{ fontWeight: "bold" }}>Trip ID</TableCell>
+                  <TableCell sx={{ fontWeight: "bold" }}>
+                    Start location
+                  </TableCell>
+                  <TableCell sx={{ fontWeight: "bold" }}>Destination</TableCell>
+                  <TableCell sx={{ fontWeight: "bold" }}>
+                    No of people
+                  </TableCell>
+                  <TableCell sx={{ fontWeight: "bold" }}>No of days</TableCell>
+                  <TableCell sx={{ fontWeight: "bold" }}>From</TableCell>
+                  <TableCell sx={{ fontWeight: "bold" }}>To</TableCell>
+                  <TableCell sx={{ fontWeight: "bold" }}>Bookings</TableCell>
+                  <TableCell sx={{ fontWeight: "bold" }}>
+                    Special Requests
+                  </TableCell>
+                  <TableCell sx={{ fontWeight: "bold" }}>Status</TableCell>
+                  <TableCell sx={{ fontWeight: "bold" }}></TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -396,17 +458,37 @@ const Trips = () => {
                     <TableCell>{row.from}</TableCell>
                     <TableCell>{row.to}</TableCell>
                     <TableCell>
-                      <Button variant="outlined" style={grayButtonStyle}>Bookings</Button>
+                      <Button
+                        style={{
+                          color: "#0078A1",
+                          backgroundColor: "rgb(0, 120, 161,0.2)", 
+                          borderRadius: "4px",
+                          padding: "2px 8px",
+                        }}
+                      >
+                        Bookings
+                      </Button>
                     </TableCell>
                     <TableCell>
-                      <Button variant="outlined" style={grayButtonStyle}>Notes</Button>
+                      <Button
+                        style={{
+                          color: "#0078A1",
+                          backgroundColor: "rgb(0, 120, 161,0.2)", 
+                          borderRadius: "4px",
+                          padding: "2px 8px",
+                        }}
+                      >
+                        Notes
+                      </Button>
                     </TableCell>
-                    <TableCell style={{ color: getStatusColor(row.status) }}>
-                      {row.status}
+                    <TableCell>
+                      <span style={getStatusColor(row.status)}>
+                        {row.status}
+                      </span>
                     </TableCell>
                     <TableCell>
                       <CustomIconButton onClick={handleClick}>
-                      <VisibilityIcon />
+                        <VisibilityIcon />
                       </CustomIconButton>
                     </TableCell>
                   </TableRow>
@@ -419,16 +501,18 @@ const Trips = () => {
 
       <Box
         sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          textAlign: 'right',
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          textAlign: "right",
           mt: 5,
-          mb:5,
+          mb: 5,
           px: 4,
         }}
       >
-        <span>{paginatedRows.length} of {totalRows} rows</span>
+        <span>
+          {paginatedRows.length} of {totalRows} rows
+        </span>
         <Stack spacing={2}>
           <Pagination
             count={Math.ceil(totalRows / rowsPerPage)}
@@ -438,7 +522,9 @@ const Trips = () => {
             shape="rounded"
           />
         </Stack>
-        <span>Page {currentPage} of {Math.ceil(totalRows / rowsPerPage)}</span>
+        <span>
+          Page {currentPage} of {Math.ceil(totalRows / rowsPerPage)}
+        </span>
       </Box>
     </>
   );

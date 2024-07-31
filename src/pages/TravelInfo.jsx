@@ -102,7 +102,11 @@ const TravelInfo = () => {
   return (
     <Container>
       <Box sx={{ flexGrow: 1, marginTop: 10 }}>
-        <Button variant="contained" color="primary" onClick={handleOpen}>
+        <Button style={{color: "white",
+          backgroundColor: "#0078A1", 
+          borderRadius: "4px",
+          padding: "4px 8px",
+        }} onClick={handleOpen}>
           Add Travel Location
         </Button>
         <Grid container spacing={4} sx={{ marginTop: 2 }}>

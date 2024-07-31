@@ -109,16 +109,29 @@ const hotelManager = () => {
   };
 
   const getStatusColor = (status) => {
-    switch (status) {
-      case "Approved":
-        return "green";
-      case "Pending":
-        return "orange";
-      case "Rejected":
-        return "red";
-      default:
-        return "black";
+    if (status === "Approved") {
+      return {
+        color: "green",
+        backgroundColor: "#d4edda",
+        borderRadius: "4px",
+        padding: "2px 8px",
+      };
+    } else if (status === "Pending") {
+      return {
+        color: "orange",
+        backgroundColor: "#fff3cd",
+        borderRadius: "4px",
+        padding: "2px 8px",
+      };
+    } else if (status === "Rejected") {
+      return {
+        color: "red",
+        backgroundColor: "#f8d7da",
+        borderRadius: "4px",
+        padding: "2px 8px",
+      };
     }
+    return {};
   };
 
   const filteredRows = rows.filter((row) => {
@@ -159,6 +172,17 @@ const hotelManager = () => {
               ))}
             </Select>
           </FormControl>
+
+          <Button
+          style={{color: "white",
+            backgroundColor: "#0078A1", 
+            borderRadius: "4px",
+            padding: "4px 8px",
+            minHeight: 55,
+          }}
+          >
+            Add User
+          </Button>
         </div>
       </Box>
 
@@ -211,20 +235,24 @@ const hotelManager = () => {
                       </TableCell>
                       <TableCell>{row.subject}</TableCell>
                       <TableCell>
-                        <Button
-                          variant="contained"
-                          color="inherit"
-                          size="small"
-                          style={{ borderRadius: "10px",marginRight: "10px" }}
-                        >
+                      <Button
+                      style={{
+                        color: "#0078A1",
+                        backgroundColor: "rgb(0, 120, 161,0.2)", 
+                        borderRadius: "4px",
+                        padding: "2px 8px",
+                      }}
+                    >
                           View
                         </Button>
                          {/*<Button variant="contained" color="inherit" size="small" style={{ borderRadius: "10px" }}>
                           Download
                         </Button>*/}
                       </TableCell>
-                      <TableCell style={{ color: getStatusColor(row.status) }}>
-                        {row.status}
+                      <TableCell>
+                        <span style={getStatusColor(row.status)}>
+                          {row.status}
+                        </span>
                       </TableCell>
                       <TableCell>
                       {/*<Button

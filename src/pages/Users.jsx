@@ -183,16 +183,14 @@ const Users = () => {
           </FormControl>*/}
 
           <Button
-            style={{
-              backgroundColor: "#0078A1",
-              color: "white",
-              borderShadow: "none",
-              minHeight: 55,
-              minWidth: 100,
-            }}
+          style={{color: "white",
+            backgroundColor: "#0078A1", 
+            borderRadius: "4px",
+            padding: "4px 8px",
+          }}
             onClick={handleAddUser}
           >
-            Add User
+            Add Tourist
           </Button>
         </div>
       </Box>

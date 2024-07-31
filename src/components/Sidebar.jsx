@@ -126,7 +126,7 @@ const Sidebar = () => {
               <span className="icon w-[30px] h-[30px] flex items-center justify-center rounded-md">
                 <GrTransaction />
               </span>
-              Finance
+              Transactions
             </Button>
           </li>
 
