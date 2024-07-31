@@ -7,21 +7,83 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import IconButton from "@mui/material/IconButton";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 
 /* Table data */
-function createData(id, type, subject, date, description, status) {
-  return { id, type, subject, date, description, status };
+function createData(
+  id,
+  type,
+  complainer,
+  complainee,
+  date,
+  description,
+  status
+) {
+  return { id, type, complainer, complainee, date, description, status };
 }
 
 const rows = [
-  createData(1, "User", "John Doe", "2024-07-01", "Spam content", "Pending"),
-  createData(2, "Blog", "Alice Smith", "2024-07-02", "Inappropriate content", "Reviewed"),
-  createData(3, "User", "Jane Smith", "2024-07-03", "Harassment", "Pending"),
-  createData(4, "Blog", "Doe Fernando", "2024-07-04", "Copyright issue", "Resolved"),
-  createData(5, "User", "Alice Johnson", "2024-07-05", "Fake profile", "Reviewed"),
+  createData(
+    1,
+    "User",
+    "John Doe",
+    "Alice Smith",
+    "2024-07-01",
+    "Spam content",
+    "Pending"
+  ),
+  createData(
+    2,
+    "Blog",
+    "Alice Smith",
+    "Jane Smith",
+    "2024-07-02",
+    "Inappropriate content",
+    "Resolved"
+  ),
+  createData(
+    3,
+    "User",
+    "Jane Smith",
+    "Doe Fernando",
+    "2024-07-03",
+    "Harassment",
+    "Pending"
+  ),
+  createData(
+    4,
+    "Blog",
+    "Doe Fernando",
+    "Alice Johnson",
+    "2024-07-04",
+    "Copyright issue",
+    "Resolved"
+  ),
+  createData(
+    5,
+    "User",
+    "Alice Johnson",
+    "John Doe",
+    "2024-07-05",
+    "Fake profile",
+    "Resolved"
+  ),
 ];
+
+const getTypeColor = (type) => {
+  switch (type) {
+    case "User":
+      return "green";
+    case "Blog":
+      return "orange";
+    default:
+      return "black";
+  }
+};
 
 const Complains = () => {
   useEffect(() => {
@@ -51,20 +113,25 @@ const Complains = () => {
           boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
         }}
       >
-        <h2 className="mb-4 font-bold text-sm pt-4 px-4">Pending Complaints</h2>
+        <h2 className="mb-4 font-bold text-sm pt-4 px-4">Complaints</h2>
 
         <div className="table-responsive py-3 px-5">
           <TableContainer>
             <Table sx={{ minWidth: 650 }} aria-label="complaint table">
               <TableHead>
                 <TableRow>
-                  <TableCell>Complaint ID</TableCell>
-                  <TableCell>Type</TableCell>
-                  <TableCell>User</TableCell>
-                  <TableCell>Date</TableCell>
-                  <TableCell>Description</TableCell>
-                  <TableCell>Status</TableCell>
-                  <TableCell>Action</TableCell>
+                  <TableCell sx={{ fontWeight: "bold" }}>
+                    Complaint ID
+                  </TableCell>
+                  <TableCell sx={{ fontWeight: "bold" }}>Type</TableCell>
+                  <TableCell sx={{ fontWeight: "bold" }}>Complainer</TableCell>
+                  <TableCell sx={{ fontWeight: "bold" }}>Complainee</TableCell>
+                  <TableCell sx={{ fontWeight: "bold" }}>
+                    Complain Date
+                  </TableCell>
+                  <TableCell sx={{ fontWeight: "bold" }}>Description</TableCell>
+                  <TableCell sx={{ fontWeight: "bold" }}>Status</TableCell>
+                  <TableCell></TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -73,24 +140,18 @@ const Complains = () => {
                     <TableCell component="th" scope="row">
                       {row.id}
                     </TableCell>
-                    <TableCell>{row.type}</TableCell>
-                    <TableCell>{row.subject}</TableCell>
+                    <TableCell style={{ color: getTypeColor(row.type) }}>
+                      {row.type}
+                    </TableCell>
+                    <TableCell>{row.complainer}</TableCell>
+                    <TableCell>{row.complainee}</TableCell>
                     <TableCell>{row.date}</TableCell>
                     <TableCell>{row.description}</TableCell>
                     <TableCell>{row.status}</TableCell>
                     <TableCell>
-                      <IconButton onClick={(event) => handleClick(event, row)}>
-                        <MoreVertIcon />
+                      <IconButton onClick={() => console.log("Edit", row.id)}>
+                        <EditIcon />
                       </IconButton>
-                      <Menu
-                        anchorEl={anchorEl}
-                        open={Boolean(anchorEl) && selectedComplaint === row}
-                        onClose={handleClose}
-                      >
-                        <MenuItem onClick={handleClose}>View Details</MenuItem>
-                        <MenuItem onClick={handleClose}>Resolve Complaint</MenuItem>
-                        <MenuItem onClick={handleClose}>Dismiss Complaint</MenuItem>
-                      </Menu>
                     </TableCell>
                   </TableRow>
                 ))}

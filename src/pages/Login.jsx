@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import loginWallpaper from '../assets/images/loginWallpaper.jpg';
 import CustomButton from './Custom/CustomButton';
 
-
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -15,7 +14,7 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         await handleLogin(email, password);
-    };
+    };    
 
     return (
         <Box

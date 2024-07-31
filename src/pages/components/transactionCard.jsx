@@ -8,7 +8,7 @@ const TransactionCard = ({ title, value, chartType, data, color }) => {
         <Typography variant="body2" color="textSecondary">
           {title}
         </Typography>
-        <Typography variant="h6" component="h2">
+        <Typography variant="h6" component="h4">
           {value}
         </Typography>
         <div style={{ width: '100%', height: 80 }}>
@@ -19,7 +19,7 @@ const TransactionCard = ({ title, value, chartType, data, color }) => {
                 <XAxis dataKey="name" />
                 <YAxis />
                 <Tooltip />
-                <Bar dataKey="value" fill="#8884d8" />
+                <Bar dataKey="value" fill="#39539E" />
               </BarChart>
             ) : (
               <LineChart data={data}>
@@ -27,7 +27,7 @@ const TransactionCard = ({ title, value, chartType, data, color }) => {
                 <XAxis dataKey="name" />
                 <YAxis />
                 <Tooltip />
-                <Line type="monotone" dataKey="value" stroke="#82ca9d" />
+                <Line type="monotone" dataKey="value" stroke="#39539E" />
               </LineChart>
             )}
           </ResponsiveContainer>

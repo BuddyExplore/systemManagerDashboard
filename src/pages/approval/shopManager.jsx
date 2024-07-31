@@ -6,8 +6,6 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import IconButton from "@mui/material/IconButton";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
@@ -16,50 +14,75 @@ import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/system";
 import Box from "@mui/material/Box";
+import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
+import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
 
 /* Table data */
-function createMessageData(id, sender, subject, content, status) {
-  return { id, sender, subject, content, status };
+function createMessageData(
+  id,
+  sender,
+  senderEmail,
+  subject,
+  content,
+  status,
+  dateSent
+) {
+  return {
+    id,
+    sender,
+    senderEmail,
+    subject,
+    content,
+    status,
+    dateSent,
+  };
 }
 
-const initialRows = [
+const rows = [
   createMessageData(
     1,
-    "John Doe",
-    "Inquiry about tour",
-    "I have some questions about the upcoming tour.",
-    "Unread"
+    "Madhusha Hansini",
+    "madhusha99@gmail.com",
+    5,
+    "",
+    "Pending"
   ),
   createMessageData(
     2,
-    "Jane Smith",
-    "Booking confirmation",
-    "I would like to confirm my booking.",
-    "Read"
+    "Nipun Bathiya",
+    "nbperera123@gmail.com",
+    6,
+    "",
+    "Approved"
   ),
   createMessageData(
     3,
-    "Alice Johnson",
-    "Technical issue",
-    "I am facing an issue with the website.",
-    "Replied"
+    "Pathumi Ahinsa",
+    "pathufernando@gmail.com",
+    3,
+    "",
+    "Rejected"
   ),
-  createMessageData(4, "Bob Brown", "Feedback", "Great service!", "Read"),
+  createMessageData(
+    4,
+    "Tharindra Fernando",
+    "tharindra23@gmail.com",
+    6,
+    "",
+    "Approved"
+  ),
   createMessageData(
     5,
-    "Charlie Davis",
-    "Payment issue",
-    "I have a problem with my payment.",
-    "Unread"
+    "Ravindu Hasanka",
+    "ravindu2000@gmail.com",
+    6,
+    "",
+    "Pending"
   ),
 ];
 
-const CustomIconButton = styled(IconButton)({
-  boxShadow: "none",
-});
-
-const Messages = () => {
+const shopManager = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -68,7 +91,6 @@ const Messages = () => {
   const [filterByStatus, setFilterByStatus] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 10;
-  const [rows, setRows] = useState(initialRows);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -86,26 +108,14 @@ const Messages = () => {
     setCurrentPage(value);
   };
 
-  const handleReply = (messageId) => {
-    console.log(`Replying to message ${messageId}`);
-  };
-
-  const handleMarkAsRead = (messageId) => {
-    const updatedRows = rows.map((row) =>
-      row.id === messageId ? { ...row, status: "Read" } : row
-    );
-    setRows(updatedRows);
-    setAnchorEl(null);
-  };
-
   const getStatusColor = (status) => {
     switch (status) {
-      case "Read":
+      case "Approved":
         return "green";
-      case "Unread":
-        return "red";
-      case "Replied":
+      case "Pending":
         return "orange";
+      case "Rejected":
+        return "red";
       default:
         return "black";
     }
@@ -167,13 +177,12 @@ const Messages = () => {
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
               <TableHead>
                 <TableRow>
-                  <TableCell>Message ID</TableCell>
-                  <TableCell>Sender</TableCell>
-                  <TableCell>Subject</TableCell>
-                  <TableCell>Content</TableCell>
+                  <TableCell>ID</TableCell>
+                  <TableCell>User</TableCell>
+                  <TableCell>No of documents</TableCell>
+                  <TableCell>Documents Uploaded</TableCell>
                   <TableCell>Status</TableCell>
-                  <TableCell>Reply</TableCell>
-                  <TableCell>Action</TableCell>
+                  <TableCell></TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -190,46 +199,54 @@ const Messages = () => {
                       <TableCell component="th" scope="row">
                         {row.id}
                       </TableCell>
-                      <TableCell>{row.sender}</TableCell>
+                      <TableCell>
+                        <Box display="flex" alignItems="center">
+                          <Box>
+                            <div style={{ color: "black" }}>{row.sender}</div>
+                            <div style={{ color: "grey" }}>
+                              {row.senderEmail}
+                            </div>
+                          </Box>
+                        </Box>
+                      </TableCell>
                       <TableCell>{row.subject}</TableCell>
-                      <TableCell>{row.content}</TableCell>
+                      <TableCell>
+                        <Button
+                          variant="contained"
+                          color="inherit"
+                          size="small"
+                          style={{ borderRadius: "10px",marginRight: "10px" }}
+                        >
+                          View
+                        </Button>
+                        {/*<Button variant="contained" color="inherit" size="small" style={{ borderRadius: "10px" }}>
+                          Download
+                        </Button>*/}
+                      </TableCell>
                       <TableCell style={{ color: getStatusColor(row.status) }}>
                         {row.status}
                       </TableCell>
                       <TableCell>
-                        {(row.status === "Unread" || row.status === "Read") && (
+                      {/*<Button
+                          variant="contained"
+                          color="success"
+                          size="small"
+                          style={{ marginTop: "5px", marginRight: "20px" }}
+                        >
+                          View
+                        </Button>*/}
+
+                        {row.status !== "Approved" && (
                           <Button
-                            variant="outlined"
-                            onClick={() => handleReply(row.id)}
+                            variant="contained"
+                            color="success"
+                            size="small"
+                            style={{ marginTop: "5px" }}
                           >
-                            Reply
+                            Approve
                           </Button>
                         )}
-                      </TableCell>
-                      <TableCell>
-                        <CustomIconButton
-                          aria-controls="simple-menu"
-                          aria-haspopup="true"
-                          onClick={handleClick}
-                        >
-                          <MoreVertIcon />
-                        </CustomIconButton>
-                        <Menu
-                          anchorEl={anchorEl}
-                          keepMounted
-                          open={Boolean(anchorEl)}
-                          onClose={handleClose}
-                        >
-                          <MenuItem onClick={handleClose}>
-                            Delete Message
-                          </MenuItem>
 
-                          {row.status === "Unread" && (
-                            <MenuItem onClick={() => handleMarkAsRead(row.id)}>
-                              Mark as Read
-                            </MenuItem>
-                          )}
-                        </Menu>
                       </TableCell>
                     </TableRow>
                   ))}
@@ -270,4 +287,4 @@ const Messages = () => {
   );
 };
 
-export default Messages;
+export default shopManager;

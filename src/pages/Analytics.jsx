@@ -187,7 +187,7 @@ const Analytics = () => {
         <div
           className="card mt-10 border-0"
           style={{
-            width: "45%", // Adjusted width to fit two items in a row
+            width: "45%",
             border: "2px solid white",
             backgroundColor: "white",
             padding: "10px",

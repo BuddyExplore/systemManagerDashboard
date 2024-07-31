@@ -5,21 +5,29 @@ import Header from "./components/Header";
 import Dashboard from "./pages/Dashboard";
 import Users from "./pages/Users";
 import Trips from "./pages/Trips";
-import Approvals from "./pages/Approvals";
+import TourGuideApprovals from "./pages/approval/tourGuide";
+import VehicleOwnerApprovals from "./pages/approval/vehicleOwner";
+import HotelMApprovals from "./pages/approval/hotelManager";
+import ActivityPApprovals from "./pages/approval/activityProvider";
+import ShopMApprovals from "./pages/approval/shopManager";
 import VehicleBreakdowns from "./pages/VehicleBreakdowns";
 import Transactions from "./pages/Transactions";
-import Cards from "./pages/Cards";
 import TravelInfo from "./pages/TravelInfo";
-import Messages from "./pages/Messages";
 import Notifications from "./pages/Notifications";
+import Messages from "./pages/Messages";
 import Complains from "./pages/Complains";
 import Analytics from "./pages/Analytics";
 import Settings from "./pages/Settings";
+
+import Login from "./pages/Login";
+import ForgotPassword from "./pages/ForgotPassword";
+import NewPassword from "./pages/NewPassword";
 
 const MyContext = createContext();
 
 function App() {
   const values = {};
+  
 
   return (
     <BrowserRouter>
@@ -33,16 +41,25 @@ function App() {
             <div className="space"></div>
             <Routes>
               <Route path="/" exact={true} element={<Dashboard />} />
+              <Route path="/login" exact={true} element={<Login />} />
+              <Route path="/forgotPassword" exact={true} element={<ForgotPassword />} />
+              <Route path="/newPassword" exact={true} element={<NewPassword />} />
+
               <Route path="/dashboard" exact={true} element={<Dashboard />} />
               <Route path="/users" exact={true} element={<Users />} />
               <Route path="/trips" exact={true} element={<Trips/>} />
-              <Route path="/approvals" exact={true} element={<Approvals/>} />
+
+              <Route path="/approval/tourGuide" exact={true} element={<TourGuideApprovals/>} />
+              <Route path="/approval/vehicleOwner" exact={true} element={<VehicleOwnerApprovals/>} />
+              <Route path="/approval/hotelManager" exact={true} element={<HotelMApprovals/>} />
+              <Route path="/approval/activityProvider" exact={true} element={<ActivityPApprovals/>} />
+              <Route path="/approval/shopManager" exact={true} element={<ShopMApprovals/>} />
+
               <Route path="/vehicleBreakdowns" exact={true} element={<VehicleBreakdowns/>} />
               <Route path="/transactions" exact={true} element={<Transactions/>} />
-              <Route path="/cards" exact={true} element={<Cards/>} />
-              <Route path="/travelInfo" exact={true} element={<TravelInfo/>} />            
+              <Route path="/travelInfo" exact={true} element={<TravelInfo/>} />    
+              <Route path="/notifications" exact={true} element={<Notifications/>} />        
               <Route path="/messages" exact={true} element={<Messages/>} />
-              <Route path="/notifications" exact={true} element={<Notifications/>} />
               <Route path="/complains" exact={true} element={<Complains/>} />
               <Route path="/analytics" exact={true} element={<Analytics />} />
               <Route path="/settings" exact={true} element={<Settings/>} />
