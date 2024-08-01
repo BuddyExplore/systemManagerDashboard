@@ -68,14 +68,14 @@ const VehicleBreakdownBox = ({
         <Button style={styles.button1} onClick={() => handleActionClick("Assign a New Vehicle")}>
           Assign a New Vehicle
         </Button>
-        <Button style={styles.button2} onClick={() => handleActionClick("Refund for Tourist")}>
+        <Button style={styles.button1} onClick={() => handleActionClick("Refund for Tourist")}>
           Contact Another Service
         </Button>
        
        {/* <Button style={styles.button} onClick={() => handleActionClick("Refund for Tourist")}>
           Refund for Tourist
         </Button>*/}
-        <Button style={styles.button3} onClick={handleProfileClick}>
+        <Button style={styles.button1} onClick={handleProfileClick}>
           View Profiles
         </Button>
         <Menu anchorEl={profileAnchorEl} keepMounted open={Boolean(profileAnchorEl)} onClose={handleProfileClose}>
@@ -148,8 +148,8 @@ const styles = {
     margin: 5,
     width: "90%",
     textTransform: "none", 
-    color: "red",
-    backgroundColor: "#f8d7da",
+    color: "gray",
+    backgroundColor: "rgb(128,128,128,0.3)",
     borderRadius: "4px",
     padding: "2px 8px",
   },

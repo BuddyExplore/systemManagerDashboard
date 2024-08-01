@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+{/*import { useEffect, useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -12,7 +12,7 @@ import { Grid } from "@mui/material";
 import TransactionCard from "./components/transactionCard";
 import ReactApexChart from "react-apexcharts";
 
-/*transactionCard data*/
+//transactionCard data
 const data3 = [
   { name: "Jan 01", value: 30 },
   { name: "Jan 02", value: 20 },
@@ -26,7 +26,7 @@ const data3 = [
   { name: "Jan 10", value: 32 },
 ];
 
-/* Table data */
+//Table data 
 function createData(name, date, amount, status, mode) {
   return { name, date, amount, status, mode };
 }
@@ -41,7 +41,7 @@ const rows = [
 
 const Transactions = () => {
   
-  /* Pie chart data */
+  // Pie chart data
   const [pieChartState, setPieChartState] = useState({
     series: [44, 55, 41, 17, 15],
     options: {
@@ -66,7 +66,7 @@ const Transactions = () => {
     },
   });
   
-  /* Column chart data */
+  // Column chart data 
   const [columnChartState, setColumnChartState] = useState({
     series: [
       {
@@ -118,7 +118,7 @@ const Transactions = () => {
     },
   });
 
-  /* Line chart data */
+  // Line chart data 
   const [lineChartState, setLineChartState] = useState({
     series: [
       {
@@ -210,7 +210,7 @@ const Transactions = () => {
             />
           </Grid>
         </Grid>
-      </div>*/}
+      </div>
 
       <div
         style={{
@@ -363,10 +363,109 @@ const Transactions = () => {
           </div>
           <div id="html-dist"></div>
         </div>
-      </div>*/}
+      </div>
 
     </>
   );
 };
 
+export default Transactions;*/}
+
+
+
+import { useState } from "react";
+import { LocalizationProvider, DateCalendar, PickersDay } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs from "dayjs";
+import { Grid, Box, Typography } from "@mui/material";
+
+/* Table data */
+const transactions = [
+  { name: "Trip to City Park", date: "2024-07-22", status: "Pending" },
+  { name: "Beach Excursion", date: "2024-07-23", status: "Completed" },
+  { name: "Mountain Hiking", date: "2024-07-24", status: "Pending" },
+  { name: "Zoo Visit", date: "2024-07-25", status: "Completed" },
+  { name: "Museum Tour", date: "2024-07-26", status: "Pending" },
+];
+
+const Transactions = () => {
+  const [selectedDate, setSelectedDate] = useState(dayjs());
+
+  const renderTransactionDates = (date, selectedDates, pickersDayProps) => {
+    const formattedDate = date.format("YYYY-MM-DD");
+    const transaction = transactions.find(
+      (transaction) => transaction.date === formattedDate
+    );
+
+    if (transaction) {
+      return (
+        <PickersDay
+          {...pickersDayProps}
+          sx={{
+            backgroundColor:
+              transaction.status === "Completed"
+                ? "green"
+                : transaction.status === "Pending"
+                ? "orange"
+                : "",
+            color: "#fff",
+            "&:hover": {
+              backgroundColor:
+                transaction.status === "Completed"
+                  ? "#388e3c"
+                  : transaction.status === "Pending"
+                  ? "#f57c00"
+                  : "",
+            },
+          }}
+        />
+      );
+    }
+
+    return <PickersDay {...pickersDayProps} />;
+  };
+
+  return (
+    <>
+      <Box
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+        marginTop="100px"
+        padding="15px"
+        
+        borderRadius="10px"
+      >
+        <Typography variant="h4" marginBottom="20px">
+          Calendar
+        </Typography>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DateCalendar
+            value={selectedDate}
+            onChange={(newValue) => setSelectedDate(newValue)}
+            renderDay={renderTransactionDates}
+          />
+        </LocalizationProvider>
+        <Box marginTop="20px">
+          <Typography variant="h6">Transactions on {selectedDate.format("YYYY-MM-DD")}:</Typography>
+          {transactions
+            .filter((transaction) => transaction.date === selectedDate.format("YYYY-MM-DD"))
+            .map((transaction) => (
+              <Typography key={transaction.name}>
+                {transaction.name} - {transaction.status}
+              </Typography>
+            ))}
+        </Box>
+      </Box>
+    </>
+  );
+};
+
 export default Transactions;
+
+
+
+
+
+
+

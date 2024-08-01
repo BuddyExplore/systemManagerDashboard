@@ -5,86 +5,55 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import IconButton from "@mui/material/IconButton";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
 import Button from "@mui/material/Button";
-import Select from "@mui/material/Select";
-import FormControl from "@mui/material/FormControl";
-import InputLabel from "@mui/material/InputLabel";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
-import { styled } from "@mui/system";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Modal from "@mui/material/Modal";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
-
-/* Table data */
-function createData(id, firstName, lastName, email, mobile) {
-  return { id, firstName, lastName, email, mobile };
-}
-
-const rows = [
-  createData(1, "Amash", "Sankalpa", "amash56@gmail.com", "078-2945789"),
-  createData(2, "Jane", "Smith", "jane.smith@example.com", "098-765-4321"),
-  createData(
-    3,
-    "Alice",
-    "Johnson",
-    "alice.johnson@example.com",
-    "555-123-4567"
-  ),
-  createData(4, "Bob", "Brown", "bob.brown@example.com", "777-888-9999"),
-  createData(
-    5,
-    "Charlie",
-    "Davis",
-    "charlie.davis@example.com",
-    "111-222-3333"
-  ),
-];
-
-const CustomIconButton = styled(IconButton)({
-  boxShadow: "none",
-});
+import axios from "axios";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
 
 const Users = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  const [anchorEl, setAnchorEl] = useState(null);
+  const [users, setUsers] = useState([]);
   const [filterByRole, setFilterByRole] = useState("");
   const [filterByStatus, setFilterByStatus] = useState("");
+  const [filterByCountry, setFilterByCountry] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [sortOrder, setSortOrder] = useState("newest");
   const [currentPage, setCurrentPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newUser, setNewUser] = useState({
-    firstName: "",
-    lastName: "",
+    first_name: "",
+    last_name: "",
     email: "",
-    mobile: "",
+    mobile_no: "",
     password: "",
+    role: "TOURIST",
   });
   const rowsPerPage = 10;
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const handleRoleFilterChange = (event) => {
-    setFilterByRole(event.target.value);
-  };
-
-  const handleStatusFilterChange = (event) => {
-    setFilterByStatus(event.target.value);
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:5001/getUsersByRole/TOURIST"
+      );
+      setUsers(response.data.content);
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   };
 
   const handlePageChange = (event, value) => {
@@ -105,57 +74,110 @@ const Users = () => {
 
   const handleAddUser = () => {
     setNewUser({
-      firstName: "Dilmi",
-      lastName: "Siriwardhana",
-      email: "dilmi@gmail.com",
-      mobile: "077-1234567",
-      password: "password",
+      first_name: "",
+      last_name: "",
+      email: "",
+      mobile_no: "",
+      password: "",
+      role: "TOURIST",
     });
     setIsModalOpen(true);
   };
 
-  const handleSaveUser = () => {
+  const handleSaveUser = async () => {
     console.log(newUser);
+    try {
+      const response = await axios.post(
+        "http://localhost:5001/addUser",
+        newUser // Pass newUser as the request body
+      );
+      console.log("User added successfully:", response.data);
+      fetchData(); // Fetch data again to update the user list
+    } catch (error) {
+      console.error("Error adding user:", error);
+    }
     handleCloseModal();
   };
 
-  const filteredRows = rows.filter((row) => {
-    return (
-      (!filterByRole || row.role === filterByRole) &&
-      (!filterByStatus || row.status === filterByStatus)
-    );
-  });
+  const filteredRows = users
+    .filter((row) => {
+      return (
+        (!filterByRole || row.role === filterByRole) &&
+        (!filterByStatus || row.status === filterByStatus) &&
+        (!filterByCountry || row.country === filterByCountry) &&
+        (row.first_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          row.last_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          row.email.toLowerCase().includes(searchTerm.toLowerCase()))
+      );
+    })
+    .sort((a, b) => {
+      if (sortOrder === "newest") {
+        return new Date(b.created_at) - new Date(a.created_at);
+      } else {
+        return new Date(a.created_at) - new Date(b.created_at);
+      }
+    });
 
   const totalRows = filteredRows.length;
   const displayedRows = Math.min(currentPage * rowsPerPage, totalRows);
 
-  const uniqueRoles = [...new Set(rows.map((row) => row.role))];
-  const uniqueStatuses = [...new Set(rows.map((row) => row.status))];
+  const handleStatusFilterChange = (event) => {
+    setFilterByStatus(event.target.value);
+  };
+
+  const handleCountryFilterChange = (event) => {
+    setFilterByCountry(event.target.value);
+  };
+
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const handleSortOrderChange = (event) => {
+    setSortOrder(event.target.value);
+  };
+
+  const uniqueStatuses = [...new Set(users.map((row) => row.status))];
+  const uniqueCountries = [...new Set(users.map((row) => row.country))];
 
   return (
     <>
       <Box sx={{ alignItems: "right", textAlign: "right" }}>
         <div className="d-flex justify-content-end align-items-center mt-24 mb-1 ">
-          {/*  <FormControl
-            style={{ minWidth: 150, minHeight: 50, marginRight: "20px"}}
+          <TextField
+            label="Search"
+            variant="outlined"
+            value={searchTerm}
+            onChange={handleSearchChange}
+            style={{ marginRight: "20px" }}
+          />
+
+        {/*  <FormControl
+            variant="outlined"
+            style={{
+              minWidth: 150,
+              minHeight: 50,
+              marginRight: "20px",
+              borderRadius: "100px",
+            }}
           >
-            <InputLabel>Filter By ID</InputLabel>
+            <InputLabel>Filter By Country</InputLabel>
             <Select
-              value={filterByRole}
-              onChange={handleRoleFilterChange}
-              label="Filter By Role"
+              variant="outlined"
+              value={filterByCountry}
+              onChange={handleCountryFilterChange}
+              label="Filter By Country"
             >
               <MenuItem value="">
                 <em>None</em>
               </MenuItem>
-              {uniqueRoles.map((role) => (
-                <MenuItem key={role} value={role}>
-                  {role}
+              {uniqueCountries.map((country) => (
+                <MenuItem key={country} value={country}>
+                  {country}
                 </MenuItem>
               ))}
             </Select>
           </FormControl>
-
           <FormControl
             variant="outlined"
             style={{
@@ -165,29 +187,25 @@ const Users = () => {
               borderRadius: "100px",
             }}
           >
-            <InputLabel>Filter By Status</InputLabel>
+            <InputLabel>Sort Order</InputLabel>
             <Select
-              value={filterByStatus}
-              onChange={handleStatusFilterChange}
-              label="Filter By Status"
+              variant="outlined"
+              value={sortOrder}
+              onChange={handleSortOrderChange}
+              label="Sort Order"
             >
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              {uniqueStatuses.map((status) => (
-                <MenuItem key={status} value={status}>
-                  {status}
-                </MenuItem>
-              ))}
+              <MenuItem value="newest">Newest</MenuItem>
+              <MenuItem value="oldest">Oldest</MenuItem>
             </Select>
           </FormControl>*/}
 
           <Button
-          style={{color: "white",
-            backgroundColor: "#0078A1", 
-            borderRadius: "4px",
-            padding: "4px 8px",
-          }}
+            style={{
+              color: "white",
+              backgroundColor: "#0078A1",
+              borderRadius: "4px",
+              padding: "4px 8px",
+            }}
             onClick={handleAddUser}
           >
             Add Tourist
@@ -213,6 +231,7 @@ const Users = () => {
                   <TableCell sx={{ fontWeight: "bold" }}>Tourist</TableCell>
                   <TableCell sx={{ fontWeight: "bold" }}>Mobile No</TableCell>
                   <TableCell sx={{ fontWeight: "bold" }}></TableCell>
+                  <TableCell sx={{ fontWeight: "bold" }}></TableCell>
                 </TableRow>
               </TableHead>
 
@@ -234,28 +253,48 @@ const Users = () => {
                         <div style={styles.userContainer}>
                           <div style={styles.userInfo}>
                             <div>
-                              {row.firstName} {row.lastName}
+                              {row.first_name} {row.last_name}
                             </div>
                             <div style={styles.userEmail}>{row.email}</div>
                           </div>
                         </div>
                       </TableCell>
-                      <TableCell>{row.mobile}</TableCell>
-
+                      <TableCell>{row.mobile_no}</TableCell>
+                      <TableCell>{row.country}</TableCell>
                       <TableCell>
-                        <IconButton
-                          onClick={() => console.log("Visible", row.id)}
+                        <Button
+                          style={{
+                            color: "#0078A1",
+                            backgroundColor: "rgb(0, 120, 161,0.2)",
+                            borderRadius: "4px",
+                            padding: "2px 8px",
+                            marginRight: "20px",
+                          }}
                         >
-                          <VisibilityIcon />
-                        </IconButton>
-                        <IconButton onClick={() => console.log("Edit", row.id)}>
-                          <EditIcon />
-                        </IconButton>
-                        <IconButton
-                          onClick={() => console.log("Delete", row.id)}
+                          View
+                        </Button>
+                        <Button
+                          style={{
+                            color: "#0078A1",
+                            backgroundColor: "rgb(0, 120, 161,0.2)",
+                            borderRadius: "4px",
+                            padding: "2px 8px",
+                            marginRight: "20px",
+                          }}
                         >
-                          <DeleteIcon />
-                        </IconButton>
+                          Update
+                        </Button>
+                        <Button
+                          style={{
+                            color: "#0078A1",
+                            backgroundColor: "rgb(0, 120, 161,0.2)",
+                            borderRadius: "4px",
+                            padding: "2px 8px",
+                            marginRight: "20px",
+                          }}
+                        >
+                          Disable
+                        </Button>
                       </TableCell>
                     </TableRow>
                   ))}
@@ -298,16 +337,16 @@ const Users = () => {
           <h2>Add New User</h2>
           <TextField
             label="First Name"
-            name="firstName"
-            value={newUser.firstName}
+            name="first_name"
+            value={newUser.first_name}
             onChange={handleInputChange}
             fullWidth
             margin="normal"
           />
           <TextField
             label="Last Name"
-            name="lastName"
-            value={newUser.lastName}
+            name="last_name"
+            value={newUser.last_name}
             onChange={handleInputChange}
             fullWidth
             margin="normal"
@@ -321,9 +360,9 @@ const Users = () => {
             margin="normal"
           />
           <TextField
-            label="Mobile"
-            name="mobile"
-            value={newUser.mobile}
+            label="Mobile No"
+            name="mobile_no"
+            value={newUser.mobile_no}
             onChange={handleInputChange}
             fullWidth
             margin="normal"
@@ -337,36 +376,6 @@ const Users = () => {
             fullWidth
             margin="normal"
           />
-          <FormControl fullWidth margin="normal">
-            <InputLabel>Role</InputLabel>
-            <Select
-              name="role"
-              value={newUser.role}
-              onChange={handleInputChange}
-              label="Role"
-            >
-              {uniqueRoles.map((role) => (
-                <MenuItem key={role} value={role}>
-                  {role}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <FormControl fullWidth margin="normal">
-            <InputLabel>Status</InputLabel>
-            <Select
-              name="status"
-              value={newUser.status}
-              onChange={handleInputChange}
-              label="Status"
-            >
-              {uniqueStatuses.map((status) => (
-                <MenuItem key={status} value={status}>
-                  {status}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
           <Button
             variant="contained"
             color="primary"
@@ -385,12 +394,6 @@ const styles = {
   userContainer: {
     display: "flex",
     alignItems: "center",
-  },
-  userImage: {
-    width: "40px",
-    height: "40px",
-    borderRadius: "50%",
-    marginRight: "10px",
   },
   userInfo: {
     display: "flex",

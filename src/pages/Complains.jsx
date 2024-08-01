@@ -29,7 +29,7 @@ function createData(
 const rows = [
   createData(
     1,
-    "User",
+    "Tourist",
     "John Doe",
     "Alice Smith",
     "2024-07-01",
@@ -47,7 +47,7 @@ const rows = [
   ),
   createData(
     3,
-    "User",
+    "Hotel Manager",
     "Jane Smith",
     "Doe Fernando",
     "2024-07-03",
@@ -65,7 +65,7 @@ const rows = [
   ),
   createData(
     5,
-    "User",
+    "Vehicle Owner",
     "Alice Johnson",
     "John Doe",
     "2024-07-05",
@@ -81,7 +81,7 @@ const getTypeColor = (type) => {
     case "Blog":
       return "orange";
     default:
-      return "black";
+      return "green";
   }
 };
 
