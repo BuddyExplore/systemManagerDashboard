@@ -44,15 +44,15 @@ const Header = () => {
       case "/trips":
         return "Trips";
       case "/approval/tourGuide":
-        return "Tour Guides";
+        return "Registration Approval of Tour Guides";
       case "/approval/vehicleOwner":
-        return "Vehicle Owners";
+        return "Registration Approval of Vehicle Owners";
       case "/approval/hotelManager":
-        return "Hotel Managers";
+        return "Registration Approval of Hotel Managers";
       case "/approval/shopManager":
-        return "Shop Managers";
+        return "Registration Approval of Shop Managers";
       case "/approval/activityProvider":
-        return "Activity Providers";
+        return "Registration Approval of Activity Providers";
       case "/vehicleBreakdowns":
         return "VehicleBreakdowns";
       case "/transactions":

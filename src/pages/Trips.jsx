@@ -486,11 +486,11 @@ const Trips = () => {
                         {row.status}
                       </span>
                     </TableCell>
-                    <TableCell>
+                   {/* <TableCell>
                       <CustomIconButton onClick={handleClick}>
                         <VisibilityIcon />
                       </CustomIconButton>
-                    </TableCell>
+                    </TableCell>*/} 
                   </TableRow>
                 ))}
               </TableBody>
